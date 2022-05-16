@@ -1,0 +1,5 @@
+Sản phẩm:
+mã loại không có data
+cách get data từ mã loại
+
+
