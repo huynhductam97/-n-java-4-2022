@@ -31,7 +31,15 @@ public class TaiKhoanDAO extends AbstractDAO<TaiKhoanDTO> {
 
   public void delete(String maTaiKhoan) {
     String[] condition = {"MaTaiKhoan"};
-    delete("mataikhoan", condition, maTaiKhoan);
+    delete("taikhoan", condition, maTaiKhoan);
+  }
+
+  public List<TaiKhoanDTO> findByCondition(String column, String data) {
+    return super.findAllByCondition("taikhoan", column, data, new TaiKhoanMapper());
+  }
+
+  public List<TaiKhoanDTO> findWithLike(String column, String data) {
+    return findWithLike("taikhoan", column, new TaiKhoanMapper(), data);
   }
 
   public int count() {

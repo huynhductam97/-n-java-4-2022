@@ -36,4 +36,12 @@ public class NhaCungCapBUS implements CRUD<NhaCungCapDTO> {
   public List<NhaCungCapDTO> findAll() {
     return nhaCungCapDAO.findAll();
   }
+
+  public List<NhaCungCapDTO> findWithLikeCondition(String column, String data) {
+    return nhaCungCapDAO.findWithLike(column, data);
+  }
+
+  public List<NhaCungCapDTO> findByCondition(String column, String data) {
+    return nhaCungCapDAO.findByCondition(column, data);
+  }
 }

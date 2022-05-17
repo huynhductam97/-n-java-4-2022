@@ -4,11 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b70b7699-b4fc-4f93-9b80-8cc5844f3ce9" name="Changes" comment="" />
+    <list default="true" id="b70b7699-b4fc-4f93-9b80-8cc5844f3ce9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/ChuongTrinhKhuyenMaiBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/ChuongTrinhKhuyenMaiBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/NhaCungCapBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/NhaCungCapBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/NhaSanXuatBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/NhaSanXuatBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/TaiKhoanBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/BUS/TaiKhoanBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/ChuongTrinhKhuyenMaiDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/ChuongTrinhKhuyenMaiDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/NhaCungCapDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/NhaSanXuatDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/NhaSanXuatDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/TaiKhoanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/TaiKhoanDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java" beforeDir="false" afterPath="$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -19,6 +33,7 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="29BZ15AMo9eKxI0QFIAV6aL1h3e" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,6 +42,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RunManager" selected="Application.FormQuanLy">
@@ -73,13 +91,28 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java</url>
-          <line>1503</line>
+          <line>2100</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java</url>
-          <line>754</line>
+          <line>824</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java</url>
+          <line>1216</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java</url>
+          <line>1157</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/GUI/View/FormQuanLy.java</url>
+          <line>1490</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/do-an-java-4-2022-master/do-an-java-4-2022-master/src/main/java/DAO/AbstractDAO.java</url>

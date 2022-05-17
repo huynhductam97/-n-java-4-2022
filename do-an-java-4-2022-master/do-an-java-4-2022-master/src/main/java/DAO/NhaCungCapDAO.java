@@ -34,6 +34,14 @@ public class NhaCungCapDAO extends AbstractDAO<NhaCungCapDTO> {
     delete("nhacungcap", condition, maNhaCungCap);
   }
 
+  public List<NhaCungCapDTO> findByCondition(String column, String data) {
+    return super.findAllByCondition("nhacungcap", column, data, new NhaCungCapMapper());
+  }
+
+  public List<NhaCungCapDTO> findWithLike(String column, String data) {
+    return findWithLike("nhacungcap", column, new NhaCungCapMapper(), data);
+  }
+
   public int count() {
     return findAll().size();
   }

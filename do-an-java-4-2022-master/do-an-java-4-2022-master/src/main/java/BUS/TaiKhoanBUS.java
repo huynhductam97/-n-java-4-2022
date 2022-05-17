@@ -1,7 +1,7 @@
 package BUS;
 
-import DTO.TaiKhoanDTO;
 import DAO.TaiKhoanDAO;
+import DTO.TaiKhoanDTO;
 import java.util.List;
 
 public class TaiKhoanBUS implements CRUD<TaiKhoanDTO> {
@@ -35,5 +35,13 @@ public class TaiKhoanBUS implements CRUD<TaiKhoanDTO> {
   @Override
   public List<TaiKhoanDTO> findAll() {
     return taiKhoanDAO.findAll();
+  }
+
+  public List<TaiKhoanDTO> findWithLikeCondition(String column, String data) {
+    return taiKhoanDAO.findWithLike(column, data);
+  }
+
+  public List<TaiKhoanDTO> findByCondition(String column, String data) {
+    return taiKhoanDAO.findByCondition(column, data);
   }
 }

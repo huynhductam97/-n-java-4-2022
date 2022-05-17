@@ -36,4 +36,12 @@ public class NhaSanXuatBUS implements CRUD<NhaSanXuatDTO> {
   public List<NhaSanXuatDTO> findAll() {
     return nhaSanXuatDAO.findAll();
   }
+
+  public List<NhaSanXuatDTO> findWithLikeCondition(String column, String data) {
+    return nhaSanXuatDAO.findWithLike(column, data);
+  }
+
+  public List<NhaSanXuatDTO> findByCondition(String column, String data) {
+    return nhaSanXuatDAO.findByCondition(column, data);
+  }
 }

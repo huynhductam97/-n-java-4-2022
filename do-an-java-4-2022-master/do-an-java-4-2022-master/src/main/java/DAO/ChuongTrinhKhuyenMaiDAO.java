@@ -56,9 +56,11 @@ public class ChuongTrinhKhuyenMaiDAO extends AbstractDAO<ChuongTrinhKhuyenMaiDTO
         parameters);
   }
 
-  public List<ChuongTrinhKhuyenMaiDTO> findByDate(String field, String data) {
+  public List<ChuongTrinhKhuyenMaiDTO> findByUseLike(String field, String data) {
     return findWithLike("chuongtrinhkhuyenmai", field, new ChuongTrinhKhuyenMaiMapper(), data);
   }
+
+
 
 
 }

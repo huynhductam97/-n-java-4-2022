@@ -1,8 +1,10 @@
 package DAO;
 
 import DTO.NhaSanXuatDTO;
+import DTO.TaiKhoanDTO;
 import java.util.List;
 import mapper.NhaSanXuatMapper;
+import mapper.TaiKhoanMapper;
 
 public class NhaSanXuatDAO extends AbstractDAO<NhaSanXuatDTO> {
 
@@ -32,6 +34,14 @@ public class NhaSanXuatDAO extends AbstractDAO<NhaSanXuatDTO> {
   public void delete(String maNhaSanXuat) {
     String[] condition = {"MaNhaSanXuat"};
     delete("nhasanxuat", condition, maNhaSanXuat);
+  }
+
+  public List<NhaSanXuatDTO> findByCondition(String column, String data) {
+    return super.findAllByCondition("nhasanxuat", column, data, new NhaSanXuatMapper());
+  }
+
+  public List<NhaSanXuatDTO> findWithLike(String column, String data) {
+    return findWithLike("nhasanxuat", column, new NhaSanXuatMapper(), data);
   }
 
   public int count() {

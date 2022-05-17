@@ -1,10 +1,14 @@
 package GUI.View;
 
 import BUS.ChuongTrinhKhuyenMaiBUS;
+import BUS.NhaCungCapBUS;
+import BUS.NhaSanXuatBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
 import BUS.TaiKhoanBUS;
 import DTO.ChuongTrinhKhuyenMaiDTO;
+import DTO.NhaCungCapDTO;
+import DTO.NhaSanXuatDTO;
 import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
 import DTO.TaiKhoanDTO;
@@ -14,6 +18,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -72,10 +78,14 @@ public class FormQuanLy extends JFrame {
   private SanPhamBUS sanPhamBUS;
   private BUS.TaiKhoanBUS taiKhoanBUS;
   private NhanVienBUS nhanVienBUS;
+  private NhaCungCapBUS nhaCungCapBUS;
+  private NhaSanXuatBUS nhaSanXuatBUS;
   private DefaultTableModel modelCTKM = new DefaultTableModel();
   private DefaultTableModel modelSP = new DefaultTableModel();
   private DefaultTableModel modelTK = new DefaultTableModel();
   private DefaultTableModel modelNV = new DefaultTableModel();
+  private DefaultTableModel modelNCC = new DefaultTableModel();
+  private DefaultTableModel modelNSX = new DefaultTableModel();
 
   /**
    * Launch the application.
@@ -102,6 +112,8 @@ public class FormQuanLy extends JFrame {
     sanPhamBUS = new SanPhamBUS();
     taiKhoanBUS = new TaiKhoanBUS();
     nhanVienBUS = new NhanVienBUS();
+    nhaCungCapBUS = new NhaCungCapBUS();
+    nhaSanXuatBUS = new NhaSanXuatBUS();
     setTitle("Qu\u1EA3n L\u00FD");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 905, 527);
@@ -271,6 +283,28 @@ public class FormQuanLy extends JFrame {
     cbMaLoai.setModel(new DefaultComboBoxModel(new String[]{null, "L1", "L2", "L3", "L4", "L5"}));
     pnTT_SanPham.add(cbMaLoai);
 
+    tableSanPham.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableSanPham.getSelectedRow();
+        SanPhamDTO sanPhamDTO = new SanPhamDTO();
+        sanPhamDTO.setMaSanPham(modelSP.getValueAt(i, 0).toString());
+        tfMaSP.setText(sanPhamDTO.getMaSanPham());
+        sanPhamDTO.setTenSanPham(modelSP.getValueAt(i, 1).toString());
+        tfTenSP.setText(sanPhamDTO.getTenSanPham());
+        sanPhamDTO.setDonGia(Double.parseDouble(modelSP.getValueAt(i, 2).toString()));
+        tfDonGia.setText(sanPhamDTO.getDonGia().toString());
+        sanPhamDTO.setDonViTinh(modelSP.getValueAt(i, 3).toString());
+        tfDonViTinh.setText(sanPhamDTO.getDonViTinh());
+        sanPhamDTO.setSoLuong(Integer.parseInt(modelSP.getValueAt(i, 4).toString()));
+        tfSoLuong.setText(sanPhamDTO.getSoLuong().toString());
+        sanPhamDTO.setMaLoai(modelSP.getValueAt(i, 5).toString());
+        cbMaLoai.setSelectedItem(sanPhamDTO.getMaLoai());
+        sanPhamDTO.setMaNhaSanXuat(modelSP.getValueAt(i, 6).toString());
+        tfMaNhaSanXuat_SP.setText(sanPhamDTO.getMaNhaSanXuat());
+      }
+    });
+
     JButton btnThemSP = new JButton("TH\u00CAM");
     btnThemSP.setBounds(10, 189, 107, 44);
     btnThemSP.addActionListener(new ActionListener() {
@@ -336,34 +370,29 @@ public class FormQuanLy extends JFrame {
           JOptionPane.showMessageDialog(tfMaSP, "Vui lòng nhập mã sản phẩm để xóa!!!");
         }
         SanPhamDTO sanPhamDTO = sanPhamBUS.timKiem(maSanPham);
-        if (tfTenSP.getText().equals("")) {
-          tfTenSP.setText(sanPhamDTO.getTenSanPham());
+        if (!tfTenSP.getText().equals("")) {
+          sanPhamDTO.setTenSanPham(tfTenSP.getText());
         }
-        sanPhamDTO.setTenSanPham(tfTenSP.getText());
 
-        if (tfDonGia.getText().equals("")) {
-          tfDonGia.setText(sanPhamDTO.getDonGia() + "");
+        if (!tfDonGia.getText().equals("")) {
+          sanPhamDTO.setDonGia(Double.parseDouble(tfDonGia.getText()));
         }
-        sanPhamDTO.setDonGia(Double.parseDouble(tfDonGia.getText()));
 
-        if (tfDonViTinh.getText().equals("")) {
-          tfDonViTinh.setText(sanPhamDTO.getDonViTinh());
+        if (!tfDonViTinh.getText().equals("")) {
+          sanPhamDTO.setDonViTinh(tfDonViTinh.getText());
         }
-        sanPhamDTO.setDonViTinh(tfDonViTinh.getText());
 
-        if (tfSoLuong.getText().equals("")) {
-          tfSoLuong.setText(sanPhamDTO.getSoLuong() + "");
+        if (!tfSoLuong.getText().equals("")) {
+          sanPhamDTO.setSoLuong(Integer.parseInt(tfSoLuong.getText()));
         }
-        sanPhamDTO.setSoLuong(Integer.parseInt(tfSoLuong.getText()));
 
-        if (cbMaLoai.getSelectedItem() == null) {
-          cbMaLoai.setSelectedItem(sanPhamDTO.getMaLoai());
+        if (cbMaLoai.getSelectedItem() != null) {
+          sanPhamDTO.setMaLoai(cbMaLoai.getSelectedItem() + "");
         }
-        sanPhamDTO.setMaLoai(cbMaLoai.getSelectedItem() + "");
-        if (tfMaNhaSanXuat_SP.getText().equals("")) {
-          tfMaNhaSanXuat_SP.setText(sanPhamDTO.getMaNhaSanXuat());
+
+        if (!tfMaNhaSanXuat_SP.getText().equals("")) {
+          sanPhamDTO.setMaNhaSanXuat(tfMaNhaSanXuat_SP.getText());
         }
-        sanPhamDTO.setMaNhaSanXuat(tfMaNhaSanXuat_SP.getText());
         sanPhamBUS.sua(sanPhamDTO);
         readDataSP();
       }
@@ -377,8 +406,20 @@ public class FormQuanLy extends JFrame {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (!tfMaSP.getText().equals("")) {
-          sanPhamBUS.timKiem(tfMaSP.getText());
-          readDataSP();
+          modelSP.setRowCount(0);
+          for (SanPhamDTO sanPhamDTO : sanPhamBUS.findByConditionUseLike("MaSanPham",
+              "%" + tfMaSP.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(sanPhamDTO.getMaSanPham());
+            row.add(sanPhamDTO.getTenSanPham());
+            row.add(sanPhamDTO.getDonGia());
+            row.add(sanPhamDTO.getDonViTinh());
+            row.add(sanPhamDTO.getSoLuong());
+            row.add(sanPhamDTO.getMaLoai());
+            row.add(sanPhamDTO.getMaNhaSanXuat());
+            modelSP.addRow(row);
+          }
+          tableSanPham.setModel(modelSP);
         }
         if (!tfTenSP.getText().equals("")) {
           modelSP.setRowCount(0);
@@ -398,8 +439,8 @@ public class FormQuanLy extends JFrame {
         }
         if (!tfDonGia.getText().equals("")) {
           modelSP.setRowCount(0);
-          for (SanPhamDTO sanPhamDTO : sanPhamBUS.findByCondition("DonGia",
-              tfDonGia.getText())) {
+          for (SanPhamDTO sanPhamDTO : sanPhamBUS.findByConditionUseLike("DonGia",
+              "%" + tfDonGia.getText() + "%")) {
             Vector row = new Vector();
             row.add(sanPhamDTO.getMaSanPham());
             row.add(sanPhamDTO.getTenSanPham());
@@ -430,8 +471,8 @@ public class FormQuanLy extends JFrame {
         }
         if (!tfSoLuong.getText().equals("")) {
           modelSP.setRowCount(0);
-          for (SanPhamDTO sanPhamDTO : sanPhamBUS.findByCondition("SoLuong",
-              tfSoLuong.getText())) {
+          for (SanPhamDTO sanPhamDTO : sanPhamBUS.findByConditionUseLike("SoLuong",
+              "%" + tfSoLuong.getText() + "%")) {
             Vector row = new Vector();
             row.add(sanPhamDTO.getMaSanPham());
             row.add(sanPhamDTO.getTenSanPham());
@@ -619,6 +660,35 @@ public class FormQuanLy extends JFrame {
         new String[]{null, "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
             "12"}));
     pnTT_NhanVien.add(cbThangSinh_NV);
+
+    tableNhanVien.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableNhanVien.getSelectedRow();
+        NhanVienDTO nhanVienDTO = new NhanVienDTO();
+        nhanVienDTO.setMaNhanVien(modelNV.getValueAt(i, 0).toString());
+        tfMaNhanVien.setText(nhanVienDTO.getMaNhanVien());
+        nhanVienDTO.setHoNhanVien(modelNV.getValueAt(i, 1).toString());
+        tfHoNhanVien.setText(nhanVienDTO.getHoNhanVien());
+        nhanVienDTO.setTenNhanVien(modelNV.getValueAt(i, 2).toString());
+        tfTenNhanVien.setText(nhanVienDTO.getTenNhanVien());
+
+        nhanVienDTO.setNgayVaoLam(
+            java.sql.Date.valueOf(modelNV.getValueAt(i, 3).toString()));
+        String[] ngayVaoLam = nhanVienDTO.getNgayVaoLam().toString().split("-");
+        cbNamSinh_NV.setSelectedItem(ngayVaoLam[0]);
+        cbThangSinh_NV.setSelectedItem(ngayVaoLam[1]);
+        cbNgaySinh_NV.setSelectedItem(ngayVaoLam[2]);
+        nhanVienDTO.setViTri(modelNV.getValueAt(i, 4).toString());
+        cbViTriNhanVien.setSelectedItem(nhanVienDTO.getViTri());
+        nhanVienDTO.setLuong(Integer.parseInt(modelNV.getValueAt(i, 5).toString()));
+        tfLuongNhanVien.setText(nhanVienDTO.getLuong().toString());
+        nhanVienDTO.setSoDienThoai(modelNV.getValueAt(i, 6).toString());
+        tfSoDienThoai_NV.setText(nhanVienDTO.getSoDienThoai());
+        nhanVienDTO.setEmail(modelNV.getValueAt(i, 7).toString());
+        tfEmail_NV.setText(nhanVienDTO.getEmail());
+      }
+    });
 
     JButton btnThemNV = new JButton("TH\u00CAM");
     btnThemNV.setBounds(10, 230, 127, 39);
@@ -1021,23 +1091,182 @@ public class FormQuanLy extends JFrame {
 
     JComboBox cbPhanQuyenTK = new JComboBox();
     cbPhanQuyenTK.setBounds(478, 72, 166, 22);
+    cbPhanQuyenTK.setModel(new DefaultComboBoxModel(
+        new String[]{null, "user", "admin"}));
     pnTT_TaiKhoan.add(cbPhanQuyenTK);
+
+    tableTaiKhoan.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableTaiKhoan.getSelectedRow();
+        TaiKhoanDTO taiKhoanDTO = new TaiKhoanDTO();
+        taiKhoanDTO.setMaTaiKhoan(modelTK.getValueAt(i, 0).toString());
+        tfMaTaiKhoan.setText(taiKhoanDTO.getMaTaiKhoan());
+        taiKhoanDTO.setTenTaiKhoan(modelTK.getValueAt(i, 1).toString());
+        tfTenTaiKhoan.setText(taiKhoanDTO.getTenTaiKhoan());
+        taiKhoanDTO.setMatKhau(modelTK.getValueAt(i, 2).toString());
+        tfMatKhauTK.setText(taiKhoanDTO.getMatKhau());
+        taiKhoanDTO.setPhanQuyen(modelTK.getValueAt(i, 3).toString());
+        cbPhanQuyenTK.setSelectedItem(taiKhoanDTO.getPhanQuyen());
+        taiKhoanDTO.setMaNhanVien(modelTK.getValueAt(i, 4).toString());
+        tfMaNV.setText(taiKhoanDTO.getMaNhanVien());
+      }
+    });
 
     JButton btnThemTK = new JButton("TH\u00CAM");
     btnThemTK.setBounds(76, 206, 89, 35);
+    btnThemTK.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        TaiKhoanDTO taiKhoanDTO = new TaiKhoanDTO();
+        try {
+          if (tfMaTaiKhoan.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhanVien, "Vui lòng nhập Mã Tài Khoản!!!");
+          }
+          if (tfTenTaiKhoan.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfTenTaiKhoan, "Vui lòng nhập Tên tài khoản!!!");
+          }
+          if (tfMatKhauTK.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMatKhauTK, "Vui lòng nhập Mật khẩu!!!");
+          }
+          if (cbPhanQuyenTK.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(cbPhanQuyenTK, "Vui lòng nhập phân quyền!!!");
+          }
+          if (tfMatKhauTK.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMatKhauTK, "Vui lòng nhập Mã nhân viên!!!");
+          }
+          taiKhoanDTO.setMaTaiKhoan(tfMaTaiKhoan.getText());
+          taiKhoanDTO.setTenTaiKhoan(tfTenTaiKhoan.getText());
+          taiKhoanDTO.setMatKhau(tfMatKhauTK.getText());
+          taiKhoanDTO.setPhanQuyen(cbPhanQuyenTK.getSelectedItem() + "");
+          taiKhoanDTO.setMaNhanVien(tfMaNV.getText());
+          taiKhoanBUS.them(taiKhoanDTO);
+        } catch (Exception ex1) {
+          JOptionPane.showMessageDialog(tfTenTaiKhoan, "Thêm không thành công!!!!");
+        }
+        readDataTK();
+      }
+    });
     pnTT_TaiKhoan.add(btnThemTK);
 
     JButton btnXoaTK = new JButton("X\u00D3A");
     btnXoaTK.setBounds(216, 206, 89, 35);
+    btnXoaTK.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (tfMaTaiKhoan.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaTaiKhoan, "Nhập mã tài khoản để xóa!!!!");
+          } else {
+            taiKhoanBUS.xoa(tfMaTaiKhoan.getText());
+          }
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfMaTaiKhoan, "Xóa không thành công!!!!");
+        }
+        readDataTK();
+      }
+    });
     pnTT_TaiKhoan.add(btnXoaTK);
 
     JButton btnSuaTK = new JButton("S\u1EECA");
     btnSuaTK.setBounds(359, 206, 89, 35);
+    btnSuaTK.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (tfMaTaiKhoan.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaTaiKhoan, "Nhập mã tài khoản để xóa!!!!");
+          } else {
+            TaiKhoanDTO taiKhoanDTO = taiKhoanBUS.timKiem(tfMaTaiKhoan.getText());
+            if (!tfTenTaiKhoan.getText().equals("")) {
+              taiKhoanDTO.setTenTaiKhoan(tfTenTaiKhoan.getText());
+            }
+            if (!tfMatKhauTK.getText().equals("")) {
+              taiKhoanDTO.setMatKhau(tfMatKhauTK.getText());
+            }
+            if (cbPhanQuyenTK.getSelectedItem() != null) {
+              taiKhoanDTO.setPhanQuyen(cbPhanQuyenTK.getSelectedItem() + "");
+            }
+            if (!tfMaNV.getText().equals("")) {
+              taiKhoanDTO.setMaNhanVien(tfMaNV.getText());
+            }
+            taiKhoanBUS.sua(taiKhoanDTO);
+          }
+          readDataTK();
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfTenTaiKhoan, "Sửa không thành công!!!!");
+        }
+      }
+    });
     pnTT_TaiKhoan.add(btnSuaTK);
 
     JButton btnTimKiemTK = new JButton("T\u00CCM KI\u1EBEM");
     btnTimKiemTK.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+        if (!tfMaTaiKhoan.getText().equals("")) {
+          TaiKhoanDTO taiKhoanDTO = taiKhoanBUS.timKiem(tfMaTaiKhoan.getText());
+          modelTK.setRowCount(0);
+          Vector row = new Vector();
+          row.add(taiKhoanDTO.getMaTaiKhoan());
+          row.add(taiKhoanDTO.getTenTaiKhoan());
+          row.add(taiKhoanDTO.getMatKhau());
+          row.add(taiKhoanDTO.getPhanQuyen());
+          row.add(taiKhoanDTO.getMaNhanVien());
+          modelTK.addRow(row);
+        }
+        if (!tfTenTaiKhoan.getText().equals("")) {
+          modelTK.setRowCount(0);
+          for (TaiKhoanDTO taiKhoanDTO : taiKhoanBUS.findWithLikeCondition("TenTaiKhoan",
+              "%" + tfTenTaiKhoan.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(taiKhoanDTO.getMaTaiKhoan());
+            row.add(taiKhoanDTO.getTenTaiKhoan());
+            row.add(taiKhoanDTO.getMatKhau());
+            row.add(taiKhoanDTO.getPhanQuyen());
+            row.add(taiKhoanDTO.getMaNhanVien());
+            modelTK.addRow(row);
+          }
+        }
+        if (!tfMatKhauTK.getText().equals("")) {
+          modelTK.setRowCount(0);
+          for (TaiKhoanDTO taiKhoanDTO : taiKhoanBUS.findWithLikeCondition("MatKhau",
+              "%" + tfMatKhauTK.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(taiKhoanDTO.getMaTaiKhoan());
+            row.add(taiKhoanDTO.getTenTaiKhoan());
+            row.add(taiKhoanDTO.getMatKhau());
+            row.add(taiKhoanDTO.getPhanQuyen());
+            row.add(taiKhoanDTO.getMaNhanVien());
+            modelTK.addRow(row);
+          }
+        }
+        if (cbPhanQuyenTK.getSelectedItem() != null) {
+          modelTK.setRowCount(0);
+          for (TaiKhoanDTO taiKhoanDTO : taiKhoanBUS.findByCondition("PhanQuyen",
+              cbPhanQuyenTK.getSelectedItem() + "")) {
+            Vector row = new Vector();
+            row.add(taiKhoanDTO.getMaTaiKhoan());
+            row.add(taiKhoanDTO.getTenTaiKhoan());
+            row.add(taiKhoanDTO.getMatKhau());
+            row.add(taiKhoanDTO.getPhanQuyen());
+            row.add(taiKhoanDTO.getMaNhanVien());
+            modelTK.addRow(row);
+          }
+        }
+        if (!tfMaNV.getText().equals("")) {
+          modelTK.setRowCount(0);
+          for (TaiKhoanDTO taiKhoanDTO : taiKhoanBUS.findWithLikeCondition("MaNhanVien",
+              tfMaNV.getText())) {
+            Vector row = new Vector();
+            row.add(taiKhoanDTO.getMaTaiKhoan());
+            row.add(taiKhoanDTO.getTenTaiKhoan());
+            row.add(taiKhoanDTO.getMatKhau());
+            row.add(taiKhoanDTO.getPhanQuyen());
+            row.add(taiKhoanDTO.getMaNhanVien());
+            modelTK.addRow(row);
+          }
+        }
+        tableTaiKhoan.setModel(modelTK);
       }
     });
     btnTimKiemTK.setBounds(497, 206, 89, 35);
@@ -1093,6 +1322,22 @@ public class FormQuanLy extends JFrame {
     lblEmail_1.setBounds(379, 107, 55, 21);
     pnTT_NhaCungCap.add(lblEmail_1);
 
+    JScrollPane scrollPaneNCC = new JScrollPane();
+    scrollPaneNCC.setBounds(10, 260, 647, 260);
+    pnTT_NhaCungCap.add(scrollPaneNCC);
+    scrollPaneNCC.setViewportView(tableNhaCungCap);
+    Vector headerNCC = new Vector<>();
+    headerNCC.add("Mã NCC");
+    headerNCC.add("Tên NCC");
+    headerNCC.add("Số điện thoại");
+    headerNCC.add("Địa chỉ");
+    headerNCC.add("Email");
+    if (modelNCC.getRowCount() == 0) {
+      modelNCC = new DefaultTableModel(headerNCC, 0);
+      readDataNCC();
+    }
+    tableNhaCungCap.setModel(modelNCC);
+
     tfMaNhaCungCap = new JTextField();
     tfMaNhaCungCap.setBounds(177, 57, 166, 22);
     pnTT_NhaCungCap.add(tfMaNhaCungCap);
@@ -1123,20 +1368,181 @@ public class FormQuanLy extends JFrame {
     lblThngTinNh.setBounds(213, 11, 260, 24);
     pnTT_NhaCungCap.add(lblThngTinNh);
 
+    tableNhaCungCap.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableNhaCungCap.getSelectedRow();
+        NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
+        nhaCungCapDTO.setMaNhaCungCap(modelNCC.getValueAt(i, 0).toString());
+        tfMaNhaCungCap.setText(nhaCungCapDTO.getMaNhaCungCap());
+        nhaCungCapDTO.setTenNhaCungCap(modelNCC.getValueAt(i, 1).toString());
+        tfTenNhaCungCap.setText(nhaCungCapDTO.getTenNhaCungCap());
+        nhaCungCapDTO.setSdt(modelNCC.getValueAt(i, 2).toString());
+        tfSoDienThoai_NCC.setText(nhaCungCapDTO.getSdt());
+        nhaCungCapDTO.setDiaChi(modelNCC.getValueAt(i, 3).toString());
+        tfDiaChiNhaCungCap.setText(nhaCungCapDTO.getDiaChi());
+        nhaCungCapDTO.setEmail(modelNCC.getValueAt(i, 4).toString());
+        tfEmail_NCC.setText(nhaCungCapDTO.getEmail());
+      }
+    });
+
     JButton btnThemNCC = new JButton("TH\u00CAM ");
     btnThemNCC.setBounds(20, 200, 113, 49);
+    btnThemNCC.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
+        try {
+          if (tfMaNhaCungCap.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhaCungCap, "Vui lòng nhập Mã Nhà cung cấp!!!");
+          }
+          if (tfTenNhaCungCap.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfTenNhaCungCap, "Vui lòng nhập Tên nhà cung cấp!!!");
+          }
+          if (tfSoDienThoai_NCC.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfSoDienThoai_NCC, "Vui lòng nhập Số điện thoại!!!");
+          }
+          if (tfDiaChiNhaCungCap.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfDiaChiNhaCungCap, "Vui lòng địa chỉ!!!");
+          }
+          if (tfEmail_NCC.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfEmail_NCC, "Vui lòng nhập Email!!!");
+          }
+          nhaCungCapDTO.setMaNhaCungCap(tfMaNhaCungCap.getText());
+          nhaCungCapDTO.setTenNhaCungCap(tfTenNhaCungCap.getText());
+          nhaCungCapDTO.setSdt(tfSoDienThoai_NCC.getText());
+          nhaCungCapDTO.setDiaChi(tfEmail_NCC.getText());
+          nhaCungCapDTO.setEmail(tfDiaChiNhaCungCap.getText());
+          nhaCungCapBUS.them(nhaCungCapDTO);
+        } catch (Exception ex1) {
+          JOptionPane.showMessageDialog(tfTenTaiKhoan, "Thêm không thành công!!!!");
+        }
+        readDataNCC();
+      }
+    });
     pnTT_NhaCungCap.add(btnThemNCC);
 
     JButton btnXoaNCC = new JButton("X\u00D3A");
     btnXoaNCC.setBounds(181, 200, 113, 47);
+    btnXoaNCC.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (tfMaNhaCungCap.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhaCungCap, "Nhập mã để xóa!!!!");
+          }
+          nhaCungCapBUS.xoa(tfMaNhaCungCap.getText());
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfTenNhaCungCap, "Xóa không thành công!!!!");
+        }
+        readDataNCC();
+      }
+    });
     pnTT_NhaCungCap.add(btnXoaNCC);
 
     JButton btnSuaNCC = new JButton("S\u1EECA");
     btnSuaNCC.setBounds(350, 202, 113, 47);
+    btnSuaNCC.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (tfMaNhaCungCap.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhaCungCap, "Nhập mã để sửa!!!!");
+          } else {
+            NhaCungCapDTO nhaCungCapDTO = nhaCungCapBUS.timKiem(tfMaNhaCungCap.getText());
+            if (!tfTenNhaCungCap.getText().equals("")) {
+              nhaCungCapDTO.setTenNhaCungCap(tfTenNhaCungCap.getText());
+            }
+            if (!tfSoDienThoai_NCC.getText().equals("")) {
+              nhaCungCapDTO.setSdt(tfSoDienThoai_NCC.getText());
+            }
+            if (!tfDiaChiNhaCungCap.getText().equals("")) {
+              nhaCungCapDTO.setDiaChi(tfDiaChiNhaCungCap.getText());
+            }
+            if (!tfEmail_NCC.getText().equals("")) {
+              nhaCungCapDTO.setEmail(tfEmail_NCC.getText());
+            }
+            nhaCungCapBUS.sua(nhaCungCapDTO);
+          }
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfTenNhaCungCap, "Sửa không thành công!!!!");
+        }
+        readDataNCC();
+      }
+    });
     pnTT_NhaCungCap.add(btnSuaNCC);
 
     JButton btnTimKiemNCC = new JButton("T\u00CCM KI\u1EBEM");
     btnTimKiemNCC.setBounds(520, 200, 113, 49);
+    btnTimKiemNCC.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (!tfMaNhaCungCap.getText().equals("")) {
+          NhaCungCapDTO nhaCungCapDTO = nhaCungCapBUS.timKiem(tfMaNhaCungCap.getText());
+          modelNCC.setRowCount(0);
+          Vector row = new Vector();
+          row.add(nhaCungCapDTO.getMaNhaCungCap());
+          row.add(nhaCungCapDTO.getTenNhaCungCap());
+          row.add(nhaCungCapDTO.getSdt());
+          row.add(nhaCungCapDTO.getDiaChi());
+          row.add(nhaCungCapDTO.getEmail());
+          modelNCC.addRow(row);
+        }
+        if (!tfTenNhaCungCap.getText().equals("")) {
+          modelNCC.setRowCount(0);
+          for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapBUS.findWithLikeCondition("TenNhaCungCap",
+              "%" + tfTenNhaCungCap.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(nhaCungCapDTO.getMaNhaCungCap());
+            row.add(nhaCungCapDTO.getTenNhaCungCap());
+            row.add(nhaCungCapDTO.getSdt());
+            row.add(nhaCungCapDTO.getDiaChi());
+            row.add(nhaCungCapDTO.getEmail());
+            modelNCC.addRow(row);
+          }
+        }
+        if (!tfDiaChiNhaCungCap.getText().equals("")) {
+          modelNCC.setRowCount(0);
+          for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapBUS.findWithLikeCondition("DiaChi",
+              "%" + tfDiaChiNhaCungCap.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(nhaCungCapDTO.getMaNhaCungCap());
+            row.add(nhaCungCapDTO.getTenNhaCungCap());
+            row.add(nhaCungCapDTO.getSdt());
+            row.add(nhaCungCapDTO.getDiaChi());
+            row.add(nhaCungCapDTO.getEmail());
+            modelNCC.addRow(row);
+          }
+        }
+        if (!tfSoDienThoai_NCC.getText().equals("")) {
+          modelNCC.setRowCount(0);
+          for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapBUS.findWithLikeCondition("Sdt",
+              "%" + tfSoDienThoai_NCC.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(nhaCungCapDTO.getMaNhaCungCap());
+            row.add(nhaCungCapDTO.getTenNhaCungCap());
+            row.add(nhaCungCapDTO.getSdt());
+            row.add(nhaCungCapDTO.getDiaChi());
+            row.add(nhaCungCapDTO.getEmail());
+            modelNCC.addRow(row);
+          }
+        }
+        if (!tfEmail_NCC.getText().equals("")) {
+          modelNCC.setRowCount(0);
+          for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapBUS.findWithLikeCondition("Email",
+              "%" + tfEmail_NCC.getText() + "%")) {
+            Vector row = new Vector();
+            row.add(nhaCungCapDTO.getMaNhaCungCap());
+            row.add(nhaCungCapDTO.getTenNhaCungCap());
+            row.add(nhaCungCapDTO.getSdt());
+            row.add(nhaCungCapDTO.getDiaChi());
+            row.add(nhaCungCapDTO.getEmail());
+            modelNCC.addRow(row);
+          }
+        }
+        tableNhaCungCap.setModel(modelNCC);
+      }
+    });
     pnTT_NhaCungCap.add(btnTimKiemNCC);
 
     JPanel pnTT_NhaSanXuat = new JPanel();
@@ -1168,6 +1574,22 @@ public class FormQuanLy extends JFrame {
     lblSinThoi_2.setBounds(354, 114, 113, 21);
     pnTT_NhaSanXuat.add(lblSinThoi_2);
 
+    JScrollPane scrollPaneNSX = new JScrollPane();
+    scrollPaneNSX.setBounds(10, 260, 647, 260);
+    pnTT_NhaSanXuat.add(scrollPaneNSX);
+    scrollPaneNSX.setViewportView(tableNhaSanXuat);
+    Vector headerNSX = new Vector<>();
+    headerNSX.add("Mã NSX");
+    headerNSX.add("Tên NSX");
+    headerNSX.add("Địa chỉ");
+    headerNSX.add("Số điện thoại");
+
+    if (modelNSX.getRowCount() == 0) {
+      modelNSX = new DefaultTableModel(headerNSX, 0);
+      readDataNSX();
+    }
+    tableNhaSanXuat.setModel(modelNSX);
+
     tfMaNhaSanXuat = new JTextField();
     tfMaNhaSanXuat.setBounds(169, 65, 164, 22);
     pnTT_NhaSanXuat.add(tfMaNhaSanXuat);
@@ -1188,9 +1610,49 @@ public class FormQuanLy extends JFrame {
     tfDiaChi_NSX.setBounds(478, 65, 164, 22);
     pnTT_NhaSanXuat.add(tfDiaChi_NSX);
 
+    tableNhaSanXuat.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableNhaSanXuat.getSelectedRow();
+        NhaSanXuatDTO nhaSanXuatDTO= new NhaSanXuatDTO();
+        nhaSanXuatDTO.setMaNhaSanXuat(modelNSX.getValueAt(i, 0).toString());
+        tfMaNhaSanXuat.setText(nhaSanXuatDTO.getMaNhaSanXuat());
+        nhaSanXuatDTO.setTenNhaSanXuat(modelNSX.getValueAt(i, 1).toString());
+        tfTenNhaSanXuat.setText(nhaSanXuatDTO.getTenNhaSanXuat());
+        nhaSanXuatDTO.setDiaChi(modelNSX.getValueAt(i, 2).toString());
+        tfDiaChi_NSX.setText(nhaSanXuatDTO.getDiaChi());
+        nhaSanXuatDTO.setSoDienThoai(modelNSX.getValueAt(i, 3).toString());
+        tfSoDienThoai_NSX.setText(nhaSanXuatDTO.getSoDienThoai());
+      }
+    });
+
     JButton btnThemNSX = new JButton("TH\u00CAM");
     btnThemNSX.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+        NhaSanXuatDTO nhaSanXuatDTO = new NhaSanXuatDTO();
+        try {
+          if (tfMaNhaSanXuat.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhaSanXuat, "Vui lòng nhập Mã Nhà sản xuất!!!");
+          }
+          if (tfTenNhaSanXuat.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfTenNhaSanXuat, "Vui lòng nhập Tên nhà sản xuất!!!");
+          }
+          if (tfDiaChi_NSX.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfDiaChi_NSX, "Vui lòng nhập địa chỉ!!!");
+          }
+
+          if (tfSoDienThoai_NCC.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfSoDienThoai_NSX, "Vui lòng nhập Số điện thoại!!!");
+          }
+          nhaSanXuatDTO.setMaNhaSanXuat(tfMaNhaSanXuat.getText());
+          nhaSanXuatDTO.setTenNhaSanXuat(tfTenNhaSanXuat.getText());
+          nhaSanXuatDTO.setSoDienThoai(tfSoDienThoai_NSX.getText());
+          nhaSanXuatDTO.setDiaChi(tfDiaChi_NSX.getText());
+          nhaSanXuatBUS.them(nhaSanXuatDTO);
+        } catch (Exception ex1) {
+          JOptionPane.showMessageDialog(tfTenTaiKhoan, "Thêm không thành công!!!!");
+        }
+        readDataNSX();
       }
     });
     btnThemNSX.setBounds(31, 166, 101, 41);
@@ -1198,14 +1660,110 @@ public class FormQuanLy extends JFrame {
 
     JButton btnXoaNSX = new JButton("X\u00D3A");
     btnXoaNSX.setBounds(193, 166, 101, 41);
+    btnXoaNSX.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (tfMaNhaSanXuat.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhaSanXuat, "Vui lòng nhập mã để xóa!!!!");
+          } else {
+            nhaSanXuatBUS.xoa(tfMaNhaSanXuat.getText());
+          }
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfMaNhaSanXuat, "Xóa không thành công!!!!");
+        }
+        readDataNSX();
+      }
+    });
     pnTT_NhaSanXuat.add(btnXoaNSX);
 
     JButton btnSuaNSX = new JButton("S\u1EECA");
     btnSuaNSX.setBounds(364, 166, 101, 41);
+    btnSuaNSX.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (tfMaNhaSanXuat.getText().equals("")) {
+            JOptionPane.showMessageDialog(tfMaNhaSanXuat, "Vui lòng nhập mã để sửa!!!!");
+          } else {
+            NhaSanXuatDTO nhaSanXuatDTO = nhaSanXuatBUS.timKiem(tfMaNhaSanXuat.getText());
+            if (!tfTenNhaSanXuat.getText().equals("")) {
+              nhaSanXuatDTO.setTenNhaSanXuat(tfTenNhaSanXuat.getText());
+            }
+            if (!tfDiaChi_NSX.getText().equals("")) {
+              nhaSanXuatDTO.setDiaChi(tfDiaChi_NSX.getText());
+            }
+            if (!tfSoDienThoai_NSX.getText().equals("")) {
+              nhaSanXuatDTO.setSoDienThoai(tfSoDienThoai_NSX.getText());
+            }
+            nhaSanXuatBUS.sua(nhaSanXuatDTO);
+          }
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfMaNhaSanXuat, "Sửa không thành công!!!!");
+        }
+        readDataNSX();
+      }
+    });
     pnTT_NhaSanXuat.add(btnSuaNSX);
 
     JButton btnTimKiemNSX = new JButton("T\u00CCM KI\u1EBEM");
     btnTimKiemNSX.setBounds(527, 166, 101, 41);
+    btnTimKiemNSX.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          if (!tfMaNhaSanXuat.getText().equals("")) {
+            NhaSanXuatDTO nhaSanXuatDTO = nhaSanXuatBUS.timKiem(tfMaNhaSanXuat.getText());
+            modelNSX.setRowCount(0);
+            Vector row = new Vector();
+            row.add(nhaSanXuatDTO.getMaNhaSanXuat());
+            row.add(nhaSanXuatDTO.getTenNhaSanXuat());
+            row.add(nhaSanXuatDTO.getDiaChi());
+            row.add(nhaSanXuatDTO.getSoDienThoai());
+            modelNSX.addRow(row);
+          }
+          if (!tfTenNhaSanXuat.getText().equals("")) {
+            modelNSX.setRowCount(0);
+            for (NhaSanXuatDTO nhaSanXuatDTO : nhaSanXuatBUS.findWithLikeCondition("TenNhaSanXuat",
+                "%" + tfTenNhaSanXuat.getText() + "%")) {
+              Vector row = new Vector();
+              row.add(nhaSanXuatDTO.getMaNhaSanXuat());
+              row.add(nhaSanXuatDTO.getTenNhaSanXuat());
+              row.add(nhaSanXuatDTO.getDiaChi());
+              row.add(nhaSanXuatDTO.getSoDienThoai());
+              modelNSX.addRow(row);
+            }
+          }
+          if (!tfDiaChi_NSX.getText().equals("")) {
+            modelNSX.setRowCount(0);
+            for (NhaSanXuatDTO nhaSanXuatDTO : nhaSanXuatBUS.findWithLikeCondition("DiaChi",
+                "%" + tfDiaChi_NSX.getText() + "%")) {
+              Vector row = new Vector();
+              row.add(nhaSanXuatDTO.getMaNhaSanXuat());
+              row.add(nhaSanXuatDTO.getTenNhaSanXuat());
+              row.add(nhaSanXuatDTO.getDiaChi());
+              row.add(nhaSanXuatDTO.getSoDienThoai());
+              modelNSX.addRow(row);
+            }
+          }
+          if (!tfSoDienThoai_NSX.getText().equals("")) {
+            modelNSX.setRowCount(0);
+            for (NhaSanXuatDTO nhaSanXuatDTO : nhaSanXuatBUS.findWithLikeCondition("SoDienThoai",
+                "%" + tfSoDienThoai_NSX.getText() + "%")) {
+              Vector row = new Vector();
+              row.add(nhaSanXuatDTO.getMaNhaSanXuat());
+              row.add(nhaSanXuatDTO.getTenNhaSanXuat());
+              row.add(nhaSanXuatDTO.getDiaChi());
+              row.add(nhaSanXuatDTO.getSoDienThoai());
+              modelNSX.addRow(row);
+            }
+          }
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(tfMaNhaSanXuat, "Tìm kiếm không thành công!!!!");
+        }
+        tableNhaSanXuat.setModel(modelNSX);
+      }
+    });
     pnTT_NhaSanXuat.add(btnTimKiemNSX);
 
     JLabel lblThngTinNh_1 = new JLabel("TH\u00D4NG TIN NH\u00C0 S\u1EA2N XU\u1EA4T");
@@ -1315,6 +1873,30 @@ public class FormQuanLy extends JFrame {
     cbNamKT_CTKM.setModel(new DefaultComboBoxModel(new String[]{null, "2020", "2021", "2022"}));
     pnTTCT_KhuyenMai.add(cbNamKT_CTKM);
 
+    tableChuongTrinhKM.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableChuongTrinhKM.getSelectedRow();
+        ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO = new ChuongTrinhKhuyenMaiDTO();
+        chuongTrinhKhuyenMaiDTO.setMaChuongTrinh(modelCTKM.getValueAt(i, 0).toString());
+        tfMaCT.setText(chuongTrinhKhuyenMaiDTO.getMaChuongTrinh());
+        chuongTrinhKhuyenMaiDTO.setTenKhuyenMai(modelCTKM.getValueAt(i, 1).toString());
+        tfTenCT.setText(chuongTrinhKhuyenMaiDTO.getTenKhuyenMai());
+        chuongTrinhKhuyenMaiDTO.setNgayBatDau(
+            java.sql.Date.valueOf(modelCTKM.getValueAt(i, 2).toString()));
+        String[] ngayBatDau = chuongTrinhKhuyenMaiDTO.getNgayBatDau().toString().split("-");
+        tfNamBD_CTKM.setSelectedItem(ngayBatDau[0]);
+        cbThangBD_CTKM.setSelectedItem(ngayBatDau[1]);
+        cbNgayBD_CTKM.setSelectedItem(ngayBatDau[2]);
+        chuongTrinhKhuyenMaiDTO.setNgayKetThuc(
+            java.sql.Date.valueOf(modelCTKM.getValueAt(i, 3).toString()));
+        String[] ngayKetThuc = chuongTrinhKhuyenMaiDTO.getNgayKetThuc().toString().split("-");
+        cbNamKT_CTKM.setSelectedItem(ngayKetThuc[0]);
+        cbThangKT_CTKM.setSelectedItem(ngayKetThuc[1]);
+        cbNgayKT_CTKM.setSelectedItem(ngayKetThuc[2]);
+      }
+    });
+
     JLabel lblThngTinChng = new JLabel(
         "TH\u00D4NG TIN CH\u01AF\u01A0NG TR\u00CCNH KHUY\u1EBEN M\u00C3I");
     lblThngTinChng.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -1366,9 +1948,8 @@ public class FormQuanLy extends JFrame {
     btnSuaCTKM.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if (tfMaCT.getText() == null || tfMaCT.getText().equals("")) {
-//          JOptionPane.showMessageDialog(null, tfMaCT, "Vui lòng nhập mã!!!");
-          JOptionPane.showMessageDialog(tfMaCT, "Vui lòng nhập mã để tìm kiếm!!!!");
+        if (tfMaCT.getText().equals("")) {
+          JOptionPane.showMessageDialog(tfTenCT, "Vui long nhap ma chuong trinh can sua!!!!");
         }
         ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO = chuongTrinhKhuyenMaiBUS.timKiem(
             tfMaCT.getText().toUpperCase()); // tránh lỗi quên bật CapsLock
@@ -1391,6 +1972,10 @@ public class FormQuanLy extends JFrame {
                     + cbNgayBD_CTKM.getSelectedObjects()[0];
             chuongTrinhKhuyenMaiDTO.setNgayBatDau(java.sql.Date.valueOf(ngayBatDau));
           }
+          if (!tfTenCT.getText().equals("")) {
+            chuongTrinhKhuyenMaiDTO.setTenKhuyenMai(tfTenCT.getText());
+          }
+
           if (tfNamBD_CTKM.getSelectedItem() != null) {
             String namBatDau = tfNamBD_CTKM.getSelectedObjects()[0] + "";
             String[] ngayBatDau = chuongTrinhKhuyenMaiDTO.getNgayBatDau().toString().split("-");
@@ -1474,8 +2059,8 @@ public class FormQuanLy extends JFrame {
             cbThangKT_CTKM.setSelectedItem(ngayKetThuc[1]);
             cbNamKT_CTKM.setSelectedItem(ngayKetThuc[0]);
             modelCTKM.setRowCount(0);
-            for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO1 : chuongTrinhKhuyenMaiBUS.findAllByCondition(
-                "MaChuongTrinh", tfMaCT.getText())) {
+            for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO1 : chuongTrinhKhuyenMaiBUS.findByUseLike(
+                "MaChuongTrinh", "%" + tfMaCT.getText() + "%")) {
               Vector row = new Vector();
               row.add(chuongTrinhKhuyenMaiDTO1.getMaChuongTrinh());
               row.add(chuongTrinhKhuyenMaiDTO1.getTenKhuyenMai());
@@ -1490,6 +2075,19 @@ public class FormQuanLy extends JFrame {
         }
 
         try {
+          if (!tfTenCT.getText().equals("")) {
+            modelCTKM.setRowCount(0);
+            for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : chuongTrinhKhuyenMaiBUS.findByUseLike(
+                "TenKhuyenMai", "%" + tfTenCT.getText() + "%")) {
+              Vector row = new Vector();
+              row.add(chuongTrinhKhuyenMaiDTO.getMaChuongTrinh());
+              row.add(chuongTrinhKhuyenMaiDTO.getTenKhuyenMai());
+              row.add(chuongTrinhKhuyenMaiDTO.getNgayBatDau());
+              row.add(chuongTrinhKhuyenMaiDTO.getNgayKetThuc());
+              modelCTKM.addRow(row);
+            }
+          }
+
           String[] fields = {"NgayBatDau", "NgayKetThuc"};
           String ngayBatDau =
               tfNamBD_CTKM.getSelectedItem() + "-" + cbThangBD_CTKM.getSelectedItem()
@@ -1516,7 +2114,7 @@ public class FormQuanLy extends JFrame {
           }
           if (tfNamBD_CTKM.getSelectedItem() != null) {
             String namBatDau = tfNamBD_CTKM.getSelectedItem() + "%";
-            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByDateWithLike(
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
                 fields[0], namBatDau);
             modelCTKM.setRowCount(0);
             for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
@@ -1530,7 +2128,7 @@ public class FormQuanLy extends JFrame {
           }
           if (cbThangBD_CTKM.getSelectedItem() != null) {
             String thangBatDau = "%" + cbThangBD_CTKM.getSelectedItem() + "%";
-            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByDateWithLike(
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
                 fields[0], thangBatDau);
             modelCTKM.setRowCount(0);
             for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
@@ -1547,7 +2145,7 @@ public class FormQuanLy extends JFrame {
           }
           if (cbNgayBD_CTKM.getSelectedItem() != null) {
             String ngayBD = "%" + cbNgayBD_CTKM.getSelectedItem();
-            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByDateWithLike(
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
                 fields[0], ngayBD);
             modelCTKM.setRowCount(0);
             for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
@@ -1577,7 +2175,7 @@ public class FormQuanLy extends JFrame {
           }
           if (cbNamKT_CTKM.getSelectedItem() != null) {
             String namKetThuc = cbNamKT_CTKM.getSelectedItem() + "%";
-            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByDateWithLike(
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
                 fields[1], namKetThuc);
             modelCTKM.setRowCount(0);
             for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
@@ -1591,7 +2189,7 @@ public class FormQuanLy extends JFrame {
           }
           if (cbThangKT_CTKM.getSelectedItem() != null) {
             String thangKetThuc = "%" + cbThangKT_CTKM.getSelectedItem() + "%";
-            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByDateWithLike(
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
                 fields[1], thangKetThuc);
             modelCTKM.setRowCount(0);
             for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
@@ -1609,7 +2207,7 @@ public class FormQuanLy extends JFrame {
           }
           if (cbNgayKT_CTKM.getSelectedItem() != null) {
             String ngayKT = "%" + cbNgayKT_CTKM.getSelectedItem();
-            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByDateWithLike(
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
                 fields[1], ngayKT);
             modelCTKM.setRowCount(0);
             for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
@@ -1808,5 +2406,32 @@ public class FormQuanLy extends JFrame {
       modelNV.addRow(row);
     }
     tableNhanVien.setModel(modelNV);
+  }
+
+  public void readDataNCC() {
+    modelNCC.setRowCount(0);
+    for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapBUS.findAll()) {
+      Vector row = new Vector();
+      row.add(nhaCungCapDTO.getMaNhaCungCap());
+      row.add(nhaCungCapDTO.getTenNhaCungCap());
+      row.add(nhaCungCapDTO.getSdt());
+      row.add(nhaCungCapDTO.getDiaChi());
+      row.add(nhaCungCapDTO.getEmail());
+      modelNCC.addRow(row);
+    }
+    tableNhaCungCap.setModel(modelNCC);
+  }
+
+  public void readDataNSX() {
+    modelNSX.setRowCount(0);
+    for (NhaSanXuatDTO nhaSanXuatDTO : nhaSanXuatBUS.findAll()) {
+      Vector row = new Vector();
+      row.add(nhaSanXuatDTO.getMaNhaSanXuat());
+      row.add(nhaSanXuatDTO.getTenNhaSanXuat());
+      row.add(nhaSanXuatDTO.getDiaChi());
+      row.add(nhaSanXuatDTO.getSoDienThoai());
+      modelNSX.addRow(row);
+    }
+    tableNhaSanXuat.setModel(modelNSX);
   }
 }

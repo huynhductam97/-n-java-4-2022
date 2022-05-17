@@ -38,8 +38,8 @@ public class ChuongTrinhKhuyenMaiBUS implements CRUD<ChuongTrinhKhuyenMaiDTO> {
     );
   }
 
-  public List<ChuongTrinhKhuyenMaiDTO> findByDateWithLike(String field, String data) {
-    return chuongTrinhKhuyenMaiDAO.findByDate(field, data);
+  public List<ChuongTrinhKhuyenMaiDTO> findByUseLike(String field, String data) {
+    return chuongTrinhKhuyenMaiDAO.findByUseLike(field, data);
   }
 
 
