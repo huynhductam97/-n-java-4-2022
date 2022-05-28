@@ -31,6 +31,7 @@ public class ExportToExcel {
           if (!fields[j].isAccessible()) {
             fields[j].setAccessible(true);
           }
+
           Cell cell1 = row1.createCell(j);
           cell1.setCellValue(fields[j].get(data) + "");
         }

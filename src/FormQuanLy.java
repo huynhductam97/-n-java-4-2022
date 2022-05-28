@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -74,18 +75,18 @@ public class FormQuanLy extends JFrame {
   private JTextField tfMaCT;
   private JTextField tfTenCT;
   private JComboBox cbNgayBD_CTKM = new JComboBox();
-   private JComboBox cbThangBD_CTKM = new JComboBox();
-   private JComboBox cbNamBD_CTKM = new JComboBox();
-   JComboBox cbNgayKT_CTKM = new JComboBox();
-   JComboBox cbThangKT_CTKM = new JComboBox();
-   JComboBox cbNamKT_CTKM = new JComboBox();
-   JComboBox tfNamBD_CTKM = new JComboBox();
-   JComboBox cbViTriNhanVien = new JComboBox();
-   JComboBox cbNgaySinh_NV = new JComboBox();
-   JComboBox cbNamSinh_NV = new JComboBox();
-   JComboBox cbThangSinh_NV = new JComboBox();
-   JComboBox cbPhanQuyenTK = new JComboBox();
-   JComboBox cbMaLoai = new JComboBox();
+  private JComboBox cbThangBD_CTKM = new JComboBox();
+  private JComboBox cbNamBD_CTKM = new JComboBox();
+  JComboBox cbNgayKT_CTKM = new JComboBox();
+  JComboBox cbThangKT_CTKM = new JComboBox();
+  JComboBox cbNamKT_CTKM = new JComboBox();
+  JComboBox tfNamBD_CTKM = new JComboBox();
+  JComboBox cbViTriNhanVien = new JComboBox();
+  JComboBox cbNgaySinh_NV = new JComboBox();
+  JComboBox cbNamSinh_NV = new JComboBox();
+  JComboBox cbThangSinh_NV = new JComboBox();
+  JComboBox cbPhanQuyenTK = new JComboBox();
+  JComboBox cbMaLoai = new JComboBox();
   private ChuongTrinhKhuyenMaiBUS chuongTrinhKhuyenMaiBUS;
   private SanPhamBUS sanPhamBUS;
   private BUS.TaiKhoanBUS taiKhoanBUS;
@@ -174,9 +175,9 @@ public class FormQuanLy extends JFrame {
 
     JButton btnThoat = new JButton("Tho\u00E1t");
     btnThoat.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    	System.exit(0);
-    	}
+      public void actionPerformed(ActionEvent e) {
+        System.exit(0);
+      }
     });
     btnThoat.setBounds(116, 434, 96, 49);
     pnChon.add(btnThoat);
@@ -192,16 +193,17 @@ public class FormQuanLy extends JFrame {
     JButton btnCT_KhuyenMai = new JButton("CT_Khuy\u1EBFn M\u00E3i");
     btnCT_KhuyenMai.setBounds(10, 11, 202, 49);
     pnChon.add(btnCT_KhuyenMai);
-    
+
     btnDangXuat.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-    	  int luachon = JOptionPane.showConfirmDialog(null, "BẠN MUỐN ĐĂNG XUẤT KHỎI HỆ THỐNG !!!", "ĐĂNG XUẤT", JOptionPane.YES_NO_OPTION);
-			System.out.println(luachon);
-			if(luachon == 0 ) {
-				FormDangNhap dangNhap = new FormDangNhap();
-				dangNhap.setVisible(true);
-				dispose();
-			}
+        int luachon = JOptionPane.showConfirmDialog(null, "BẠN MUỐN ĐĂNG XUẤT KHỎI HỆ THỐNG !!!",
+            "ĐĂNG XUẤT", JOptionPane.YES_NO_OPTION);
+        System.out.println(luachon);
+        if (luachon == 0) {
+          FormDangNhap dangNhap = new FormDangNhap();
+          dangNhap.setVisible(true);
+          dispose();
+        }
       }
     });
 
@@ -214,7 +216,7 @@ public class FormQuanLy extends JFrame {
     pnTT_SanPham.setBackground(new Color(135, 206, 235));
     CardThongTin.add(pnTT_SanPham, "name_830384674955600");
     pnTT_SanPham.setLayout(null);
-    
+
     JScrollPane scrollPane = new JScrollPane();
     scrollPane.setBounds(10, 244, 647, 239);
     pnTT_SanPham.add(scrollPane);
@@ -222,14 +224,12 @@ public class FormQuanLy extends JFrame {
     tableSanPham = new JTable();
     scrollPane.setViewportView(tableSanPham);
     tableSanPham.setModel(modelSP);
-    
-       
 
     JScrollPane scrollPaneSP = new JScrollPane();
     scrollPaneSP.setBounds(10, 250, 647, 260);
 //    pnTT_SanPham.add(scrollPaneSP);
 //    scrollPaneSP.setViewportView(tableSanPham);
-    
+
     Vector headerSP = new Vector<>();
     headerSP.add("Mã SP");
     headerSP.add("Tên SP");
@@ -243,8 +243,7 @@ public class FormQuanLy extends JFrame {
       readDataSP();
     }
     tableSanPham.setModel(modelSP);
-    
-    
+
     JLabel lblMaSP = new JLabel("M\u00E3 S\u1EA3n Ph\u1EA9m :");
     lblMaSP.setFont(new Font("Times New Roman", Font.BOLD, 18));
     lblMaSP.setBounds(10, 59, 120, 21);
@@ -310,7 +309,6 @@ public class FormQuanLy extends JFrame {
     tfMaNhaSanXuat_SP.setBounds(488, 122, 149, 22);
     pnTT_SanPham.add(tfMaNhaSanXuat_SP);
 
-    
     cbMaLoai.setBounds(488, 94, 149, 22);
     cbMaLoai.setModel(new DefaultComboBoxModel(new String[]{null, "L1", "L2", "L3", "L4", "L5"}));
     pnTT_SanPham.add(cbMaLoai);
@@ -433,8 +431,9 @@ public class FormQuanLy extends JFrame {
         }
         if (!tfTenSP.getText().equals("")) {
           modelSP.setRowCount(0);
-          for (SanPhamDTO sanPhamDTO : sanPhamBUS.findByConditionUseLike("TenSanPham",
-              "%" + tfTenSP.getText() + "%")) {
+          List<SanPhamDTO> results = sanPhamBUS.findByConditionUseLike("TenSanPham",
+              "%" + tfTenSP.getText() + "%");
+          for (SanPhamDTO sanPhamDTO : results) {
             Vector row = new Vector();
             row.add(sanPhamDTO.getMaSanPham());
             row.add(sanPhamDTO.getTenSanPham());
@@ -446,6 +445,12 @@ public class FormQuanLy extends JFrame {
             modelSP.addRow(row);
           }
           tableSanPham.setModel(modelSP);
+          ExportToExcel.export("sanpham_theoten", SanPhamDTO.class, results);
+          try {
+            ReadDataFromExcel.readData("sanpham_theoten");
+          } catch (IOException ex) {
+            ex.printStackTrace();
+          }
         }
         if (!tfDonGia.getText().equals("")) {
           modelSP.setRowCount(0);
@@ -462,8 +467,9 @@ public class FormQuanLy extends JFrame {
             modelSP.addRow(row);
           }
           tableSanPham.setModel(modelSP);
-          ExportToExcel.export("sanpham_theodongia", SanPhamDTO.class, sanPhamBUS.findByConditionUseLike("DonGia",
-              "%" + tfDonGia.getText() + "%"));
+          ExportToExcel.export("sanpham_theodongia", SanPhamDTO.class,
+              sanPhamBUS.findByConditionUseLike("DonGia",
+                  "%" + tfDonGia.getText() + "%"));
         }
         if (!tfDonViTinh.getText().equals("")) {
           modelSP.setRowCount(0);
@@ -536,8 +542,8 @@ public class FormQuanLy extends JFrame {
 
     JButton btnLoaiSP = new JButton("LO\u1EA0I");
     btnLoaiSP.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    	}
+      public void actionPerformed(ActionEvent e) {
+      }
     });
     btnLoaiSP.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -552,14 +558,15 @@ public class FormQuanLy extends JFrame {
     lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
     lblNewLabel_1.setBounds(219, 11, 216, 24);
     pnTT_SanPham.add(lblNewLabel_1);
-    
+
     JButton btnRS_1 = new JButton("");
-    btnRS_1.setIcon(new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
+    btnRS_1.setIcon(
+        new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
     btnRS_1.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		readDataSP();
-    		clearSP();
-    	}
+      public void actionPerformed(ActionEvent e) {
+        readDataSP();
+        clearSP();
+      }
     });
     btnRS_1.setBounds(593, 8, 51, 43);
     pnTT_SanPham.add(btnRS_1);
@@ -568,7 +575,7 @@ public class FormQuanLy extends JFrame {
     pnTT_NhanVien.setBackground(new Color(100, 149, 237));
     CardThongTin.add(pnTT_NhanVien, "name_830757335461200");
     pnTT_NhanVien.setLayout(null);
-    
+
     JScrollPane scrollPane_2 = new JScrollPane();
     scrollPane_2.setBounds(10, 280, 647, 203);
     pnTT_NhanVien.add(scrollPane_2);
@@ -576,8 +583,6 @@ public class FormQuanLy extends JFrame {
     tableNhanVien = new JTable();
     scrollPane_2.setViewportView(tableNhanVien);
     tableNhanVien.setModel(modelNV);
-    
-     
 
     JScrollPane scrollPaneNhanVien = new JScrollPane();
     scrollPaneNhanVien.setBounds(10, 280, 647, 260);
@@ -667,12 +672,10 @@ public class FormQuanLy extends JFrame {
     tfEmail_NV.setBounds(487, 196, 155, 21);
     pnTT_NhanVien.add(tfEmail_NV);
 
-    
     cbViTriNhanVien.setBounds(487, 57, 155, 22);
     cbViTriNhanVien.setModel(new DefaultComboBoxModel(new String[]{null, "Nhân viên", "Quản lý"}));
     pnTT_NhanVien.add(cbViTriNhanVien);
 
-    
     cbNgaySinh_NV.setBounds(156, 197, 45, 22);
     cbNgaySinh_NV.setModel(new DefaultComboBoxModel(
         new String[]{null, "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
@@ -681,12 +684,10 @@ public class FormQuanLy extends JFrame {
             "28", "29", "30", "31"}));
     pnTT_NhanVien.add(cbNgaySinh_NV);
 
-    
     cbNamSinh_NV.setBounds(260, 197, 51, 22);
     cbNamSinh_NV.setModel(new DefaultComboBoxModel(new String[]{null, "2020", "2021", "2022"}));
     pnTT_NhanVien.add(cbNamSinh_NV);
 
-   
     cbThangSinh_NV.setBounds(205, 197, 45, 22);
     cbThangSinh_NV.setModel(new DefaultComboBoxModel(
         new String[]{null, "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
@@ -842,8 +843,9 @@ public class FormQuanLy extends JFrame {
             }
             if (!tfHoNhanVien.getText().equals("")) {
               modelNV.setRowCount(0);
-              for (NhanVienDTO nhanVienDTO : nhanVienBUS.findWithLikeCondition("HoNhanVien",
-                  "%" + tfHoNhanVien.getText() + "%")) {
+              List<NhanVienDTO> results = nhanVienBUS.findWithLikeCondition("HoNhanVien",
+                  "%" + tfHoNhanVien.getText() + "%");
+              for (NhanVienDTO nhanVienDTO : results) {
                 Vector row = new Vector();
                 row.add(nhanVienDTO.getMaNhanVien());
                 row.add(nhanVienDTO.getHoNhanVien());
@@ -856,12 +858,13 @@ public class FormQuanLy extends JFrame {
                 modelNV.addRow(row);
               }
               tableNhanVien.setModel(modelNV);
+              ExportToExcel.export("nhanvien_theoho", NhanVienDTO.class, results);
+              ReadDataFromExcel.readData("nhanvien_theoho");
             }
             if (!tfTenNhanVien.getText().equals("")) {
               modelNV.setRowCount(0);
               for (NhanVienDTO nhanVienDTO : nhanVienBUS.findWithLikeCondition("TenNhanVien",
                   "%" + tfTenNhanVien.getText() + "%")) {
-
                 Vector row = new Vector();
                 row.add(nhanVienDTO.getMaNhanVien());
                 row.add(nhanVienDTO.getHoNhanVien());
@@ -1032,31 +1035,30 @@ public class FormQuanLy extends JFrame {
     lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
     lblNewLabel.setBounds(229, 11, 224, 24);
     pnTT_NhanVien.add(lblNewLabel);
-    
+
     JButton btnRS_NV = new JButton("");
     btnRS_NV.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		readDataNV();
-    		clearNV();
-    	}
+      public void actionPerformed(ActionEvent e) {
+        readDataNV();
+        clearNV();
+      }
     });
     btnRS_NV.setBounds(592, 3, 51, 43);
-    btnRS_NV.setIcon(new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
+    btnRS_NV.setIcon(
+        new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
     pnTT_NhanVien.add(btnRS_NV);
 
     JPanel pnTT_TaiKhoan = new JPanel();
     pnTT_TaiKhoan.setBackground(new Color(30, 144, 255));
     CardThongTin.add(pnTT_TaiKhoan, "name_830764199438500");
     pnTT_TaiKhoan.setLayout(null);
-    
+
     JScrollPane scrollPane_3 = new JScrollPane();
     scrollPane_3.setBounds(10, 252, 647, 231);
     pnTT_TaiKhoan.add(scrollPane_3);
 
     tableTaiKhoan = new JTable();
     scrollPane_3.setViewportView(tableTaiKhoan);
-    
-      
 
     JLabel lblMaTaiKhoan = new JLabel("M\u00E3 T\u00E0i Kho\u1EA3n :");
     lblMaTaiKhoan.setFont(new Font("Times New Roman", Font.BOLD, 19));
@@ -1108,7 +1110,6 @@ public class FormQuanLy extends JFrame {
     tfMaNV.setBounds(478, 119, 166, 23);
     pnTT_TaiKhoan.add(tfMaNV);
 
-   
     cbPhanQuyenTK.setBounds(478, 72, 166, 22);
     cbPhanQuyenTK.setModel(new DefaultComboBoxModel(
         new String[]{null, "user", "admin"}));
@@ -1217,8 +1218,9 @@ public class FormQuanLy extends JFrame {
         }
         if (!tfTenTaiKhoan.getText().equals("")) {
           modelTK.setRowCount(0);
-          for (TaiKhoanDTO taiKhoanDTO : taiKhoanBUS.findWithLikeCondition("TenTaiKhoan",
-              "%" + tfTenTaiKhoan.getText() + "%")) {
+          List<TaiKhoanDTO> taiKhoanResults = taiKhoanBUS.findWithLikeCondition("TenTaiKhoan",
+              "%" + tfTenTaiKhoan.getText() + "%");
+          for (TaiKhoanDTO taiKhoanDTO : taiKhoanResults) {
             Vector row = new Vector();
             row.add(taiKhoanDTO.getMaTaiKhoan());
             row.add(taiKhoanDTO.getTenTaiKhoan());
@@ -1226,6 +1228,12 @@ public class FormQuanLy extends JFrame {
             row.add(taiKhoanDTO.getPhanQuyen());
             row.add(taiKhoanDTO.getMaNV());
             modelTK.addRow(row);
+          }
+          ExportToExcel.export("taikhoan_theoten", TaiKhoanDTO.class, taiKhoanResults);
+          try {
+            ReadDataFromExcel.readData("taikhoan_theoten");
+          } catch (IOException ex) {
+            ex.printStackTrace();
           }
         }
         if (!tfMatKhauTK.getText().equals("")) {
@@ -1277,7 +1285,7 @@ public class FormQuanLy extends JFrame {
     pnTT_NhaCungCap.setBackground(new Color(0, 191, 255));
     CardThongTin.add(pnTT_NhaCungCap, "name_830765793286600");
     pnTT_NhaCungCap.setLayout(null);
-    
+
     JScrollPane scrollPane_4 = new JScrollPane();
     scrollPane_4.setBounds(10, 258, 647, 225);
     pnTT_NhaCungCap.add(scrollPane_4);
@@ -1285,24 +1293,24 @@ public class FormQuanLy extends JFrame {
     tableNhaCungCap = new JTable();
     scrollPane_4.setViewportView(tableNhaCungCap);
     tableNhaCungCap.setModel(modelNCC);
-    
-        tableNhaCungCap.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-            int i = tableNhaCungCap.getSelectedRow();
-            NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
-            nhaCungCapDTO.setMaNhaCungCap(modelNCC.getValueAt(i, 0).toString());
-            tfMaNhaCungCap.setText(nhaCungCapDTO.getMaNhaCungCap());
-            nhaCungCapDTO.setTenNhaCungCap(modelNCC.getValueAt(i, 1).toString());
-            tfTenNhaCungCap.setText(nhaCungCapDTO.getTenNhaCungCap());
-            nhaCungCapDTO.setSdt(modelNCC.getValueAt(i, 2).toString());
-            tfSoDienThoai_NCC.setText(nhaCungCapDTO.getSdt());
-            nhaCungCapDTO.setDiaChi(modelNCC.getValueAt(i, 3).toString());
-            tfDiaChiNhaCungCap.setText(nhaCungCapDTO.getDiaChi());
-            nhaCungCapDTO.setEmail(modelNCC.getValueAt(i, 4).toString());
-            tfEmail_NCC.setText(nhaCungCapDTO.getEmail());
-          }
-        });
+
+    tableNhaCungCap.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableNhaCungCap.getSelectedRow();
+        NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
+        nhaCungCapDTO.setMaNhaCungCap(modelNCC.getValueAt(i, 0).toString());
+        tfMaNhaCungCap.setText(nhaCungCapDTO.getMaNhaCungCap());
+        nhaCungCapDTO.setTenNhaCungCap(modelNCC.getValueAt(i, 1).toString());
+        tfTenNhaCungCap.setText(nhaCungCapDTO.getTenNhaCungCap());
+        nhaCungCapDTO.setSdt(modelNCC.getValueAt(i, 2).toString());
+        tfSoDienThoai_NCC.setText(nhaCungCapDTO.getSdt());
+        nhaCungCapDTO.setDiaChi(modelNCC.getValueAt(i, 3).toString());
+        tfDiaChiNhaCungCap.setText(nhaCungCapDTO.getDiaChi());
+        nhaCungCapDTO.setEmail(modelNCC.getValueAt(i, 4).toString());
+        tfEmail_NCC.setText(nhaCungCapDTO.getEmail());
+      }
+    });
 
     JScrollPane scrollPaneTK = new JScrollPane();
     scrollPaneTK.setBounds(5, 260, 647, 260);
@@ -1493,8 +1501,10 @@ public class FormQuanLy extends JFrame {
         }
         if (!tfTenNhaCungCap.getText().equals("")) {
           modelNCC.setRowCount(0);
-          for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapBUS.findWithLikeCondition("TenNhaCungCap",
-              "%" + tfTenNhaCungCap.getText() + "%")) {
+          List<NhaCungCapDTO> nhaCungCapDTOList = nhaCungCapBUS.findWithLikeCondition(
+              "TenNhaCungCap",
+              "%" + tfTenNhaCungCap.getText() + "%");
+          for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapDTOList) {
             Vector row = new Vector();
             row.add(nhaCungCapDTO.getMaNhaCungCap());
             row.add(nhaCungCapDTO.getTenNhaCungCap());
@@ -1502,6 +1512,12 @@ public class FormQuanLy extends JFrame {
             row.add(nhaCungCapDTO.getDiaChi());
             row.add(nhaCungCapDTO.getEmail());
             modelNCC.addRow(row);
+          }
+          ExportToExcel.export("nhacungcap_theoten", NhaCungCapDTO.class, nhaCungCapDTOList);
+          try {
+            ReadDataFromExcel.readData("nhacungcap_theoten");
+          } catch (IOException ex) {
+            ex.printStackTrace();
           }
         }
         if (!tfDiaChiNhaCungCap.getText().equals("")) {
@@ -1547,14 +1563,15 @@ public class FormQuanLy extends JFrame {
       }
     });
     pnTT_NhaCungCap.add(btnTimKiemNCC);
-    
+
     JButton btnRS_4 = new JButton("");
-    btnRS_4.setIcon(new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
+    btnRS_4.setIcon(
+        new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
     btnRS_4.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		readDataNCC();
-    		clearNCC();
-    	}
+      public void actionPerformed(ActionEvent e) {
+        readDataNCC();
+        clearNCC();
+      }
     });
     btnRS_4.setBounds(593, 11, 51, 43);
     pnTT_NhaCungCap.add(btnRS_4);
@@ -1563,7 +1580,7 @@ public class FormQuanLy extends JFrame {
     pnTT_NhaSanXuat.setBackground(new Color(224, 255, 255));
     CardThongTin.add(pnTT_NhaSanXuat, "name_830767186557700");
     pnTT_NhaSanXuat.setLayout(null);
-    
+
     JScrollPane scrollPane_5 = new JScrollPane();
     scrollPane_5.setBounds(10, 218, 647, 265);
     pnTT_NhaSanXuat.add(scrollPane_5);
@@ -1571,22 +1588,22 @@ public class FormQuanLy extends JFrame {
     tableNhaSanXuat = new JTable();
     scrollPane_5.setViewportView(tableNhaSanXuat);
     tableNhaSanXuat.setModel(modelNSX);
-    
-        tableNhaSanXuat.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-            int i = tableNhaSanXuat.getSelectedRow();
-            NhaSanXuatDTO nhaSanXuatDTO= new NhaSanXuatDTO();
-            nhaSanXuatDTO.setMaNhaSanXuat(modelNSX.getValueAt(i, 0).toString());
-            tfMaNhaSanXuat.setText(nhaSanXuatDTO.getMaNhaSanXuat());
-            nhaSanXuatDTO.setTenNhaSanXuat(modelNSX.getValueAt(i, 1).toString());
-            tfTenNhaSanXuat.setText(nhaSanXuatDTO.getTenNhaSanXuat());
-            nhaSanXuatDTO.setDiaChi(modelNSX.getValueAt(i, 2).toString());
-            tfDiaChi_NSX.setText(nhaSanXuatDTO.getDiaChi());
-            nhaSanXuatDTO.setSoDienThoai(modelNSX.getValueAt(i, 3).toString());
-            tfSoDienThoai_NSX.setText(nhaSanXuatDTO.getSoDienThoai());
-          }
-        });
+
+    tableNhaSanXuat.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableNhaSanXuat.getSelectedRow();
+        NhaSanXuatDTO nhaSanXuatDTO = new NhaSanXuatDTO();
+        nhaSanXuatDTO.setMaNhaSanXuat(modelNSX.getValueAt(i, 0).toString());
+        tfMaNhaSanXuat.setText(nhaSanXuatDTO.getMaNhaSanXuat());
+        nhaSanXuatDTO.setTenNhaSanXuat(modelNSX.getValueAt(i, 1).toString());
+        tfTenNhaSanXuat.setText(nhaSanXuatDTO.getTenNhaSanXuat());
+        nhaSanXuatDTO.setDiaChi(modelNSX.getValueAt(i, 2).toString());
+        tfDiaChi_NSX.setText(nhaSanXuatDTO.getDiaChi());
+        nhaSanXuatDTO.setSoDienThoai(modelNSX.getValueAt(i, 3).toString());
+        tfSoDienThoai_NSX.setText(nhaSanXuatDTO.getSoDienThoai());
+      }
+    });
 
     JLabel lblMaNhaSanXuat = new JLabel("M\u00E3 Nh\u00E0 S\u1EA3n Xu\u1EA5t :");
     lblMaNhaSanXuat.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -1741,8 +1758,9 @@ public class FormQuanLy extends JFrame {
           }
           if (!tfTenNhaSanXuat.getText().equals("")) {
             modelNSX.setRowCount(0);
-            for (NhaSanXuatDTO nhaSanXuatDTO : nhaSanXuatBUS.findWithLikeCondition("TenNhaSanXuat",
-                "%" + tfTenNhaSanXuat.getText() + "%")) {
+            List<NhaSanXuatDTO> results = nhaSanXuatBUS.findWithLikeCondition("TenNhaSanXuat",
+                "%" + tfTenNhaSanXuat.getText() + "%");
+            for (NhaSanXuatDTO nhaSanXuatDTO : results) {
               Vector row = new Vector();
               row.add(nhaSanXuatDTO.getMaNhaSanXuat());
               row.add(nhaSanXuatDTO.getTenNhaSanXuat());
@@ -1750,6 +1768,8 @@ public class FormQuanLy extends JFrame {
               row.add(nhaSanXuatDTO.getSoDienThoai());
               modelNSX.addRow(row);
             }
+            ExportToExcel.export("nhasanxuat_theoten", NhaSanXuatDTO.class, results);
+            ReadDataFromExcel.readData("nhasanxuat_theoten");
           }
           if (!tfDiaChi_NSX.getText().equals("")) {
             modelNSX.setRowCount(0);
@@ -1787,14 +1807,15 @@ public class FormQuanLy extends JFrame {
     lblThngTinNh_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
     lblThngTinNh_1.setBounds(187, 15, 263, 24);
     pnTT_NhaSanXuat.add(lblThngTinNh_1);
-    
+
     JButton btnRS_5 = new JButton("");
-    btnRS_5.setIcon(new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
+    btnRS_5.setIcon(
+        new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
     btnRS_5.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		readDataNSX();
-    		clearNSX();
-    	}
+      public void actionPerformed(ActionEvent e) {
+        readDataNSX();
+        clearNSX();
+      }
     });
     btnRS_5.setBounds(592, 11, 51, 43);
     pnTT_NhaSanXuat.add(btnRS_5);
@@ -1823,15 +1844,13 @@ public class FormQuanLy extends JFrame {
     pnTTCT_KhuyenMai.setBackground(new Color(255, 160, 122));
     CardThongTin.add(pnTTCT_KhuyenMai, "name_15312920090800");
     pnTTCT_KhuyenMai.setLayout(null);
-    
+
     JScrollPane scrollPane_1 = new JScrollPane();
     scrollPane_1.setBounds(10, 223, 647, 260);
     pnTTCT_KhuyenMai.add(scrollPane_1);
 
     tableChuongTrinhKM = new JTable();
     scrollPane_1.setViewportView(tableChuongTrinhKM);
-    
-        
 
     JLabel lblMaChuongTrinh = new JLabel("M\u00E3 Ch\u01B0\u01A1ng tr\u00ECnh :");
     lblMaChuongTrinh.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -1863,7 +1882,6 @@ public class FormQuanLy extends JFrame {
     tfTenCT.setBounds(174, 124, 164, 20);
     pnTTCT_KhuyenMai.add(tfTenCT);
 
-    
     cbNgayBD_CTKM.setBounds(449, 70, 39, 22);
     cbNgayBD_CTKM.setModel(new DefaultComboBoxModel(
         new String[]{null, "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
@@ -1873,19 +1891,16 @@ public class FormQuanLy extends JFrame {
 
     pnTTCT_KhuyenMai.add(cbNgayBD_CTKM);
 
-   
     cbThangBD_CTKM.setBounds(508, 70, 39, 22);
     cbThangBD_CTKM.setModel(new DefaultComboBoxModel(
         new String[]{null, "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
             "12"}));
     pnTTCT_KhuyenMai.add(cbThangBD_CTKM);
 
-    
     tfNamBD_CTKM.setBounds(557, 70, 63, 22);
     tfNamBD_CTKM.setModel(new DefaultComboBoxModel(new String[]{null, "2020", "2021", "2022"}));
     pnTTCT_KhuyenMai.add(tfNamBD_CTKM);
 
-    
     cbNgayKT_CTKM.setBounds(449, 122, 39, 22);
     cbNgayKT_CTKM.setModel(new DefaultComboBoxModel(
         new String[]{null, "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
@@ -1900,7 +1915,6 @@ public class FormQuanLy extends JFrame {
             "12"}));
     pnTTCT_KhuyenMai.add(cbThangKT_CTKM);
 
-    
     cbNamKT_CTKM.setBounds(557, 122, 63, 22);
     cbNamKT_CTKM.setModel(new DefaultComboBoxModel(new String[]{null, "2020", "2021", "2022"}));
     pnTTCT_KhuyenMai.add(cbNamKT_CTKM);
@@ -2086,8 +2100,9 @@ public class FormQuanLy extends JFrame {
         try {
           if (!tfTenCT.getText().equals("")) {
             modelCTKM.setRowCount(0);
-            for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : chuongTrinhKhuyenMaiBUS.findByUseLike(
-                "TenKhuyenMai", "%" + tfTenCT.getText() + "%")) {
+            List<ChuongTrinhKhuyenMaiDTO> results = chuongTrinhKhuyenMaiBUS.findByUseLike(
+                "TenKhuyenMai", "%" + tfTenCT.getText() + "%");
+            for (ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO : results) {
               Vector row = new Vector();
               row.add(chuongTrinhKhuyenMaiDTO.getMaChuongTrinh());
               row.add(chuongTrinhKhuyenMaiDTO.getTenKhuyenMai());
@@ -2095,6 +2110,9 @@ public class FormQuanLy extends JFrame {
               row.add(chuongTrinhKhuyenMaiDTO.getNgayKetThuc());
               modelCTKM.addRow(row);
             }
+            ExportToExcel.export("chuongtrinhkhuyenmai_theoten", ChuongTrinhKhuyenMaiDTO.class,
+                results);
+            ReadDataFromExcel.readData("chuongtrinhkhuyenmai_theoten");
           }
 
           String[] fields = {"NgayBatDau", "NgayKetThuc"};
@@ -2134,7 +2152,8 @@ public class FormQuanLy extends JFrame {
               row.add(chuongTrinhKhuyenMaiDTO.getNgayKetThuc());
               modelCTKM.addRow(row);
             }
-            ExportToExcel.export("chuongtrinhkhuyenmai_theonam", ChuongTrinhKhuyenMaiDTO.class, results);
+            ExportToExcel.export("chuongtrinhkhuyenmai_theonam", ChuongTrinhKhuyenMaiDTO.class,
+                results);
             ReadDataFromExcel.readData("chuongtrinhkhuyenmai_theonam");
           }
           if (cbThangBD_CTKM.getSelectedItem() != null) {
@@ -2243,10 +2262,10 @@ public class FormQuanLy extends JFrame {
 
     JButton btnCT_CTKM = new JButton("CHI TI\u1EBET");
     btnCT_CTKM.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		FormChiTiet_CTKM chieTiet_CTKM = new FormChiTiet_CTKM();
-    		chieTiet_CTKM.setVisible(true);
-    	}
+      public void actionPerformed(ActionEvent e) {
+        FormChiTiet_CTKM chieTiet_CTKM = new FormChiTiet_CTKM();
+        chieTiet_CTKM.setVisible(true);
+      }
     });
 
     JScrollPane scrollPaneCTKM = new JScrollPane();
@@ -2354,120 +2373,122 @@ public class FormQuanLy extends JFrame {
       }
     });
     tableChuongTrinhKM.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-          int i = tableChuongTrinhKM.getSelectedRow();
-          ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO = new ChuongTrinhKhuyenMaiDTO();
-          chuongTrinhKhuyenMaiDTO.setMaChuongTrinh(modelCTKM.getValueAt(i, 0).toString());
-          tfMaCT.setText(chuongTrinhKhuyenMaiDTO.getMaChuongTrinh());
-          chuongTrinhKhuyenMaiDTO.setTenKhuyenMai(modelCTKM.getValueAt(i, 1).toString());
-          tfTenCT.setText(chuongTrinhKhuyenMaiDTO.getTenKhuyenMai());
-          chuongTrinhKhuyenMaiDTO.setNgayBatDau(
-              java.sql.Date.valueOf(modelCTKM.getValueAt(i, 2).toString()));
-          String[] ngayBatDau = chuongTrinhKhuyenMaiDTO.getNgayBatDau().toString().split("-");
-			tfNamBD_CTKM.setSelectedItem(ngayBatDau[0]);
-			cbThangBD_CTKM.setSelectedItem(ngayBatDau[1]);
-			cbNgayBD_CTKM.setSelectedItem(ngayBatDau[2]);
-          chuongTrinhKhuyenMaiDTO.setNgayKetThuc(
-              java.sql.Date.valueOf(modelCTKM.getValueAt(i, 3).toString()));
-          String[] ngayKetThuc = chuongTrinhKhuyenMaiDTO.getNgayKetThuc().toString().split("-");
-			cbNamKT_CTKM.setSelectedItem(ngayKetThuc[0]);
-			cbThangKT_CTKM.setSelectedItem(ngayKetThuc[1]);
-          cbNgayKT_CTKM.setSelectedItem(ngayKetThuc[2]);
-        }
-      });
-      tableChuongTrinhKM.setModel(modelCTKM);
-      
-      JButton btnRS = new JButton("");
-      btnRS.setIcon(new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
-      btnRS.addActionListener(new ActionListener() {
-      	public void actionPerformed(ActionEvent e) {
-      		readDataCTKM();
-      		clearCTKM();
-      	}
-      });
-      btnRS.setBounds(595, 11, 51, 43);
-      pnTTCT_KhuyenMai.add(btnRS);
-      
-      tableNhanVien.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-            int i = tableNhanVien.getSelectedRow();
-            NhanVienDTO nhanVienDTO = new NhanVienDTO();
-            nhanVienDTO.setMaNhanVien(modelNV.getValueAt(i, 0).toString());
-            tfMaNhanVien.setText(nhanVienDTO.getMaNhanVien());
-            nhanVienDTO.setHoNhanVien(modelNV.getValueAt(i, 1).toString());
-            tfHoNhanVien.setText(nhanVienDTO.getHoNhanVien());
-            nhanVienDTO.setTenNhanVien(modelNV.getValueAt(i, 2).toString());
-            tfTenNhanVien.setText(nhanVienDTO.getTenNhanVien());
-            nhanVienDTO.setNgayVaoLam(
-                java.sql.Date.valueOf(modelNV.getValueAt(i, 3).toString()));
-            String[] ngayVaoLam = nhanVienDTO.getNgayVaoLam().toString().split("-");
-			cbNamSinh_NV.setSelectedItem(ngayVaoLam[0]);
-			cbThangSinh_NV.setSelectedItem(ngayVaoLam[1]);
-			cbNgaySinh_NV.setSelectedItem(ngayVaoLam[2]);
-            nhanVienDTO.setViTri(modelNV.getValueAt(i, 4).toString());
-			cbViTriNhanVien.setSelectedItem(nhanVienDTO.getViTri());
-            nhanVienDTO.setLuong(Integer.parseInt(modelNV.getValueAt(i, 5).toString()));
-            tfLuongNhanVien.setText(nhanVienDTO.getLuong().toString());
-            nhanVienDTO.setSoDienThoai(modelNV.getValueAt(i, 6).toString());
-            tfSoDienThoai_NV.setText(nhanVienDTO.getSoDienThoai());
-            nhanVienDTO.setEmail(modelNV.getValueAt(i, 7).toString());
-            tfEmail_NV.setText(nhanVienDTO.getEmail());
-          }
-        });
-      
-      tableTaiKhoan.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-            int i = tableTaiKhoan.getSelectedRow();
-            TaiKhoanDTO taiKhoanDTO = new TaiKhoanDTO();
-            taiKhoanDTO.setMaTaiKhoan(modelTK.getValueAt(i, 0).toString());
-            tfMaTaiKhoan.setText(taiKhoanDTO.getMaTaiKhoan());
-            taiKhoanDTO.setTenTaiKhoan(modelTK.getValueAt(i, 1).toString());
-            tfTenTaiKhoan.setText(taiKhoanDTO.getTenTaiKhoan());
-            taiKhoanDTO.setMatKhau(modelTK.getValueAt(i, 2).toString());
-            tfMatKhauTK.setText(taiKhoanDTO.getMatKhau());
-            taiKhoanDTO.setPhanQuyen(modelTK.getValueAt(i, 3).toString());
-			cbPhanQuyenTK.setSelectedItem(taiKhoanDTO.getPhanQuyen());
-            taiKhoanDTO.setMaNV(modelTK.getValueAt(i, 4).toString());
-            tfMaNV.setText(taiKhoanDTO.getMaNV());
-          }
-        });
-        tableTaiKhoan.setModel(modelTK);
-        
-        JButton btnRS_3 = new JButton("");
-        btnRS_3.setIcon(new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
-        btnRS_3.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		readDataTK();
-        		clearTk();
-        	}
-        });
-        btnRS_3.setBounds(593, 11, 51, 43);
-        pnTT_TaiKhoan.add(btnRS_3);
-        // click -> thong tin
-        tableSanPham.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-              int i = tableSanPham.getSelectedRow();
-              SanPhamDTO sanPhamDTO = new SanPhamDTO();
-              sanPhamDTO.setMaSanPham(modelSP.getValueAt(i, 0).toString());
-              tfMaSP.setText(sanPhamDTO.getMaSanPham());
-              sanPhamDTO.setTenSanPham(modelSP.getValueAt(i, 1).toString());
-              tfTenSP.setText(sanPhamDTO.getTenSanPham());
-              sanPhamDTO.setDonGia((modelSP.getValueAt(i, 2).toString()));
-              tfDonGia.setText(sanPhamDTO.getDonGia().toString());
-              sanPhamDTO.setDonViTinh(modelSP.getValueAt(i, 3).toString());
-              tfDonViTinh.setText(sanPhamDTO.getDonViTinh());
-              sanPhamDTO.setSoLuong((modelSP.getValueAt(i, 4).toString()));
-              tfSoLuong.setText(sanPhamDTO.getSoLuong().toString());
-              sanPhamDTO.setMaLoai(modelSP.getValueAt(i, 5).toString());
-              cbMaLoai.setSelectedItem(sanPhamDTO.getMaLoai());
-              sanPhamDTO.setMaNhaSanXuat(modelSP.getValueAt(i, 6).toString());
-              tfMaNhaSanXuat_SP.setText(sanPhamDTO.getMaNhaSanXuat());
-            }
-          });
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableChuongTrinhKM.getSelectedRow();
+        ChuongTrinhKhuyenMaiDTO chuongTrinhKhuyenMaiDTO = new ChuongTrinhKhuyenMaiDTO();
+        chuongTrinhKhuyenMaiDTO.setMaChuongTrinh(modelCTKM.getValueAt(i, 0).toString());
+        tfMaCT.setText(chuongTrinhKhuyenMaiDTO.getMaChuongTrinh());
+        chuongTrinhKhuyenMaiDTO.setTenKhuyenMai(modelCTKM.getValueAt(i, 1).toString());
+        tfTenCT.setText(chuongTrinhKhuyenMaiDTO.getTenKhuyenMai());
+        chuongTrinhKhuyenMaiDTO.setNgayBatDau(
+            java.sql.Date.valueOf(modelCTKM.getValueAt(i, 2).toString()));
+        String[] ngayBatDau = chuongTrinhKhuyenMaiDTO.getNgayBatDau().toString().split("-");
+        tfNamBD_CTKM.setSelectedItem(ngayBatDau[0]);
+        cbThangBD_CTKM.setSelectedItem(ngayBatDau[1]);
+        cbNgayBD_CTKM.setSelectedItem(ngayBatDau[2]);
+        chuongTrinhKhuyenMaiDTO.setNgayKetThuc(
+            java.sql.Date.valueOf(modelCTKM.getValueAt(i, 3).toString()));
+        String[] ngayKetThuc = chuongTrinhKhuyenMaiDTO.getNgayKetThuc().toString().split("-");
+        cbNamKT_CTKM.setSelectedItem(ngayKetThuc[0]);
+        cbThangKT_CTKM.setSelectedItem(ngayKetThuc[1]);
+        cbNgayKT_CTKM.setSelectedItem(ngayKetThuc[2]);
+      }
+    });
+    tableChuongTrinhKM.setModel(modelCTKM);
+
+    JButton btnRS = new JButton("");
+    btnRS.setIcon(
+        new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
+    btnRS.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        readDataCTKM();
+        clearCTKM();
+      }
+    });
+    btnRS.setBounds(595, 11, 51, 43);
+    pnTTCT_KhuyenMai.add(btnRS);
+
+    tableNhanVien.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableNhanVien.getSelectedRow();
+        NhanVienDTO nhanVienDTO = new NhanVienDTO();
+        nhanVienDTO.setMaNhanVien(modelNV.getValueAt(i, 0).toString());
+        tfMaNhanVien.setText(nhanVienDTO.getMaNhanVien());
+        nhanVienDTO.setHoNhanVien(modelNV.getValueAt(i, 1).toString());
+        tfHoNhanVien.setText(nhanVienDTO.getHoNhanVien());
+        nhanVienDTO.setTenNhanVien(modelNV.getValueAt(i, 2).toString());
+        tfTenNhanVien.setText(nhanVienDTO.getTenNhanVien());
+        nhanVienDTO.setNgayVaoLam(
+            java.sql.Date.valueOf(modelNV.getValueAt(i, 3).toString()));
+        String[] ngayVaoLam = nhanVienDTO.getNgayVaoLam().toString().split("-");
+        cbNamSinh_NV.setSelectedItem(ngayVaoLam[0]);
+        cbThangSinh_NV.setSelectedItem(ngayVaoLam[1]);
+        cbNgaySinh_NV.setSelectedItem(ngayVaoLam[2]);
+        nhanVienDTO.setViTri(modelNV.getValueAt(i, 4).toString());
+        cbViTriNhanVien.setSelectedItem(nhanVienDTO.getViTri());
+        nhanVienDTO.setLuong(Integer.parseInt(modelNV.getValueAt(i, 5).toString()));
+        tfLuongNhanVien.setText(nhanVienDTO.getLuong().toString());
+        nhanVienDTO.setSoDienThoai(modelNV.getValueAt(i, 6).toString());
+        tfSoDienThoai_NV.setText(nhanVienDTO.getSoDienThoai());
+        nhanVienDTO.setEmail(modelNV.getValueAt(i, 7).toString());
+        tfEmail_NV.setText(nhanVienDTO.getEmail());
+      }
+    });
+
+    tableTaiKhoan.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableTaiKhoan.getSelectedRow();
+        TaiKhoanDTO taiKhoanDTO = new TaiKhoanDTO();
+        taiKhoanDTO.setMaTaiKhoan(modelTK.getValueAt(i, 0).toString());
+        tfMaTaiKhoan.setText(taiKhoanDTO.getMaTaiKhoan());
+        taiKhoanDTO.setTenTaiKhoan(modelTK.getValueAt(i, 1).toString());
+        tfTenTaiKhoan.setText(taiKhoanDTO.getTenTaiKhoan());
+        taiKhoanDTO.setMatKhau(modelTK.getValueAt(i, 2).toString());
+        tfMatKhauTK.setText(taiKhoanDTO.getMatKhau());
+        taiKhoanDTO.setPhanQuyen(modelTK.getValueAt(i, 3).toString());
+        cbPhanQuyenTK.setSelectedItem(taiKhoanDTO.getPhanQuyen());
+        taiKhoanDTO.setMaNV(modelTK.getValueAt(i, 4).toString());
+        tfMaNV.setText(taiKhoanDTO.getMaNV());
+      }
+    });
+    tableTaiKhoan.setModel(modelTK);
+
+    JButton btnRS_3 = new JButton("");
+    btnRS_3.setIcon(
+        new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\DoAn\\imgButton\\refresh.png"));
+    btnRS_3.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        readDataTK();
+        clearTk();
+      }
+    });
+    btnRS_3.setBounds(593, 11, 51, 43);
+    pnTT_TaiKhoan.add(btnRS_3);
+    // click -> thong tin
+    tableSanPham.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int i = tableSanPham.getSelectedRow();
+        SanPhamDTO sanPhamDTO = new SanPhamDTO();
+        sanPhamDTO.setMaSanPham(modelSP.getValueAt(i, 0).toString());
+        tfMaSP.setText(sanPhamDTO.getMaSanPham());
+        sanPhamDTO.setTenSanPham(modelSP.getValueAt(i, 1).toString());
+        tfTenSP.setText(sanPhamDTO.getTenSanPham());
+        sanPhamDTO.setDonGia((modelSP.getValueAt(i, 2).toString()));
+        tfDonGia.setText(sanPhamDTO.getDonGia().toString());
+        sanPhamDTO.setDonViTinh(modelSP.getValueAt(i, 3).toString());
+        tfDonViTinh.setText(sanPhamDTO.getDonViTinh());
+        sanPhamDTO.setSoLuong((modelSP.getValueAt(i, 4).toString()));
+        tfSoLuong.setText(sanPhamDTO.getSoLuong().toString());
+        sanPhamDTO.setMaLoai(modelSP.getValueAt(i, 5).toString());
+        cbMaLoai.setSelectedItem(sanPhamDTO.getMaLoai());
+        sanPhamDTO.setMaNhaSanXuat(modelSP.getValueAt(i, 6).toString());
+        tfMaNhaSanXuat_SP.setText(sanPhamDTO.getMaNhaSanXuat());
+      }
+    });
     this.setVisible(true);
   }
 
@@ -2557,57 +2578,63 @@ public class FormQuanLy extends JFrame {
     }
     tableNhaSanXuat.setModel(modelNSX);
   }
-  
+
   public void clearCTKM() {
-	  tfMaCT.setText("");
-	  tfTenCT.setText("");
-	  cbNgayBD_CTKM.setSelectedIndex(-1);
-	  cbThangBD_CTKM.setSelectedIndex(-1);
-	  tfNamBD_CTKM.setSelectedIndex(-1);
-	  cbNgayKT_CTKM.setSelectedIndex(-1);
-	  cbThangKT_CTKM.setSelectedIndex(-1);
-	  cbNamKT_CTKM.setSelectedIndex(-1);
+    tfMaCT.setText("");
+    tfTenCT.setText("");
+    cbNgayBD_CTKM.setSelectedIndex(-1);
+    cbThangBD_CTKM.setSelectedIndex(-1);
+    tfNamBD_CTKM.setSelectedIndex(-1);
+    cbNgayKT_CTKM.setSelectedIndex(-1);
+    cbThangKT_CTKM.setSelectedIndex(-1);
+    cbNamKT_CTKM.setSelectedIndex(-1);
   }
+
   public void clearNV() {
-	  tfMaNhanVien.setText("");
-	  tfHoNhanVien.setText("");
-	  tfTenNhanVien.setText("");
-	  cbNgaySinh_NV.setSelectedIndex(0);
-	  cbThangSinh_NV.setSelectedIndex(0);
-	  cbNamSinh_NV.setSelectedIndex(0);
-	  cbViTriNhanVien.setSelectedIndex(0);
-	  tfLuongNhanVien.setText("");
-	  tfSoDienThoai_NV.setText("");
-	  tfEmail_NV.setText("");
+    tfMaNhanVien.setText("");
+    tfHoNhanVien.setText("");
+    tfTenNhanVien.setText("");
+    cbNgaySinh_NV.setSelectedIndex(0);
+    cbThangSinh_NV.setSelectedIndex(0);
+    cbNamSinh_NV.setSelectedIndex(0);
+    cbViTriNhanVien.setSelectedIndex(0);
+    tfLuongNhanVien.setText("");
+    tfSoDienThoai_NV.setText("");
+    tfEmail_NV.setText("");
   }
+
   public void clearTk() {
-	  tfMaTaiKhoan.setText("");
-	  tfTenTaiKhoan.setText("");
-	  tfMatKhauTK.setText("");
-	  cbPhanQuyenTK.setSelectedIndex(-1);
-	  tfMaNV.setText(""); 
+    tfMaTaiKhoan.setText("");
+    tfTenTaiKhoan.setText("");
+    tfMatKhauTK.setText("");
+    cbPhanQuyenTK.setSelectedIndex(-1);
+    tfMaNV.setText("");
   }
+
   public void clearNCC() {
-	  tfMaNhaCungCap.setText("");
-	  tfTenNhaCungCap.setText("");
-	  tfSoDienThoai_NCC.setText("");
-	  tfDiaChiNhaCungCap.setText("");
-	  tfEmail_NCC.setText("");
-	  
-  } public void clearNSX() {
-	  tfMaNhaSanXuat.setText("");
-	  tfTenNhaSanXuat.setText("");
-	  tfSoDienThoai_NCC.setText("");
-	  tfDiaChi_NSX.setText("");
-	  tfSoDienThoai_NSX.setText(""); 
+    tfMaNhaCungCap.setText("");
+    tfTenNhaCungCap.setText("");
+    tfSoDienThoai_NCC.setText("");
+    tfDiaChiNhaCungCap.setText("");
+    tfEmail_NCC.setText("");
+
   }
+
+  public void clearNSX() {
+    tfMaNhaSanXuat.setText("");
+    tfTenNhaSanXuat.setText("");
+    tfSoDienThoai_NCC.setText("");
+    tfDiaChi_NSX.setText("");
+    tfSoDienThoai_NSX.setText("");
+  }
+
   public void clearSP() {
-	  tfMaSP.setText("");
-	  tfTenSP.setText("");
-	  tfDonViTinh.setText("");
-	  tfDonGia.setText("");
-	  tfSoLuong.setText("");
-	  cbMaLoai.setSelectedIndex(-1);
-	  tfMaNhaSanXuat_SP.setText("");
+    tfMaSP.setText("");
+    tfTenSP.setText("");
+    tfDonViTinh.setText("");
+    tfDonGia.setText("");
+    tfSoLuong.setText("");
+    cbMaLoai.setSelectedIndex(-1);
+    tfMaNhaSanXuat_SP.setText("");
   }
 }
